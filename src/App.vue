@@ -27,6 +27,12 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn>
+        <router-link to="{name: 'terrainOverview'}">terrainOverview</router-link>
+      </v-btn>
+
+      <v-spacer></v-spacer>
+
       <v-btn
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
@@ -39,18 +45,21 @@
 
     <v-content>
       <HelloWorld/>
+      <terrainOverview/>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
+import terrainOverview from './components/terrains-overview';
 
 export default {
   name: 'App',
 
   components: {
     HelloWorld,
+    terrainOverview
   },
 
   data: () => ({

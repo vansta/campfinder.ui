@@ -28,7 +28,10 @@
       <v-spacer></v-spacer>
 
       <v-btn>
-        <router-link to="{name: 'terrainOverview'}">terrainOverview</router-link>
+        <router-link :to="{name: 'terrainOverview'}">terrainOverview</router-link>
+      </v-btn>
+      <v-btn>
+        <router-link :to="{name: 'buildingOverview'}">buildingOverview</router-link>
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -44,22 +47,17 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
-      <terrainOverview/>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-import terrainOverview from './components/terrains-overview';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
-    terrainOverview
   },
 
   data: () => ({

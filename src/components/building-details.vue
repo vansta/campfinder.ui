@@ -2,11 +2,15 @@
 
   <section class="building-details">
     <h1>building-details Component</h1>
+    <commonDetails/>
   </section>
+  
 
 </template>
 
 <script lang="js">
+
+  import commonDetails from "common-details";
 
   export default  {
     name: 'building-details',
@@ -24,6 +28,9 @@
     },
     computed: {
 
+    },
+    components:{
+      commonDetails
     }
 }
 

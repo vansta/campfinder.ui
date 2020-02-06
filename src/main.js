@@ -14,7 +14,7 @@ import buildingDetails from '../src/components/building-details.vue'
 const routes = [
   {path: '/overview/terrain', name:"terrainOverview", component: terrainOverview},
   {path: '/overview/building', name:"buildingOverview", component: buildingOverview},
-  {path: '/details/common', name:"commonDetails", component: commonDetails},
+  {path: '/details', name:"commonDetails", component: commonDetails},
   {path: '/details/building', name:"buildingDetails", component: buildingDetails}
 ]
 

@@ -2,9 +2,6 @@
 
   <section class="buildings-overview">
     <h1>buildings overview</h1>
-    <div>
-      {{testField}}
-    </div>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -29,7 +26,10 @@
       return {
         headers: [
           {text:"name", value:"Name"},
-          {text:"dormitories", value:"Dormitories"}
+          {text:"Slaapzalen", value:"Dormitories"},
+          {text:"Aantal personen", value:"AmountPersons"},
+          {text:"Stad", value:"City"},
+          {text:"Website", value:"Website"}
         ],
         items: []
       }
@@ -39,11 +39,10 @@
     },
     methods: {
       RowClicked(selectedRow){
-        this.$router.push('/details', {props: selectedRow})
+        this.$router.push({name: 'buildingDetails', params: {selectedRow : selectedRow}})
       },
       FillDataTableBuildings(){
         axios.get('https://localhost:44307/api/building')
-          //.then(resp => this.testField = resp.data)
           .then(resp => this.items = resp.data)
           .catch(error => alert(error))
       }

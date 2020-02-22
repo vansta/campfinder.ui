@@ -37,12 +37,11 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
+        @click="RouteToNewCampPlace"
         text
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <span class="mr-2">Nieuwe kampplaats</span>
+        <v-icon>mdi-border-color</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -63,5 +62,10 @@ export default {
   data: () => ({
     //
   }),
+  methods:{
+    RouteToNewCampPlace(){
+      
+    }
+  }
 };
 </script>

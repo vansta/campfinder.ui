@@ -14,8 +14,6 @@
 
 <script lang="js">
 
-  import axios from "../../node_modules/axios";
-
   export default  {
     name: 'buildings-overview',
     props: [],
@@ -39,12 +37,11 @@
     },
     methods: {
       RowClicked(selectedRow){
-        axios.get('https://localhost:44307/api/building',
-            {params: {id: selectedRow.Id}} )
+        this.$http.GetBuildingDetails(selectedRow.Id)
           .then(resp => this.RouteToDetails(resp.data))
       },
       FillDataTableBuildings(){
-        axios.get('https://localhost:44307/api/building')
+        this.$http.GetBuildingsOverview()
           .then(resp => this.items = resp.data)
           .catch(error => alert(error))
       },

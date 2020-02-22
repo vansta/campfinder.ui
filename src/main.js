@@ -12,6 +12,10 @@ import commonDetails from '../src/components/common-details.vue';
 import buildingDetails from '../src/components/building-details.vue'
 import terrainDetails from '../src/components/terrain-details.vue'
 
+import services from '../src/Services/ApiServices';
+
+Vue.prototype.$http = services;
+
 const routes = [
   {path: '/overview/terrain', name:"terrainOverview", component: terrainOverview},
   {path: '/overview/building', name:"buildingOverview", component: buildingOverview},

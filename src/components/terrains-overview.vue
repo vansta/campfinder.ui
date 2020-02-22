@@ -14,8 +14,6 @@
 
 <script lang="js">
 
-  import axios from '../../node_modules/axios'
-
   export default  {
     name: 'terrains-overview',
     props: [],
@@ -40,13 +38,12 @@
     },
     methods: {
       RowClicked(selectedRow){
-        axios.get('https://localhost:44307/api/terrain',
-        {params: {id: selectedRow.Id}} )
+        this.$http.GetTerrainDetails(selectedRow.Id)
           .then(resp => this.RouteToDetails(resp.data))
         
       },
       FillDataTableBuildings(){
-        axios.get('https://localhost:44307/api/terrain')
+        this.$http.GetTerrainsOverview()
           .then(resp => this.items = resp.data)
           .catch(error => alert(error))
       },

@@ -1,7 +1,14 @@
 <template lang="html">
 
   <section class="search">
-    <h1>search Component</h1>
+    <h1>Zoeken</h1>
+    <v-card>
+      <v-form>
+        <v-text-field v-model="searchModel.Name"  label="Naam" outlined/>
+        <v-text-field v-model="searchModel.AmountPersons"  label="Aantal personen" outlined/>
+        <v-switch v-model="searchModel.Foreign" label='Buitenland'/>
+      </v-form>
+    </v-card>
   </section>
 
 </template>
@@ -16,7 +23,7 @@
     },
     data () {
       return {
-
+        searchModel: {}
       }
     },
     methods: {
@@ -33,5 +40,8 @@
 <style scoped lang="scss">
   .search {
 
+  }
+  form{
+    padding: 2%;
   }
 </style>

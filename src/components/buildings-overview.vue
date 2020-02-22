@@ -1,6 +1,7 @@
 <template lang="html">
 
   <section class="buildings-overview">
+    <search/>
     <h1>buildings overview</h1>
     <v-data-table
       :headers="headers"
@@ -13,6 +14,8 @@
 </template>
 
 <script lang="js">
+
+  import search from '../components/search.vue';
 
   export default  {
     name: 'buildings-overview',
@@ -52,6 +55,10 @@
     },
     computed: {
 
+    },
+    
+    components:{
+      search
     }
 }
 

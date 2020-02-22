@@ -39,12 +39,18 @@
     },
     methods: {
       RowClicked(selectedRow){
-        this.$router.push({name: 'buildingDetails', params: {selectedRow : selectedRow}})
+        axios.get('https://localhost:44307/api/building',
+            {params: {id: selectedRow.Id}} )
+          .then(resp => this.RouteToDetails(resp.data))
       },
       FillDataTableBuildings(){
         axios.get('https://localhost:44307/api/building')
           .then(resp => this.items = resp.data)
           .catch(error => alert(error))
+      },
+      
+      RouteToDetails(selectedCampPlace){
+        this.$router.push({name: 'buildingDetails', params: {selectedCampPlace: selectedCampPlace }})
       }
     },
     computed: {

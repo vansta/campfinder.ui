@@ -1,6 +1,6 @@
 <template lang="html">
 
-  <section class="building-details">
+  <section class="terrain-overview">
     <h1>{{model.Name}}</h1>
     <commonDetails/>
     <v-container>
@@ -10,14 +10,14 @@
           cols="12"
           sm="6"
         >
-          Slaapzalen
+          Oppervlakte
         </v-col>
         <v-col
           key="2"
           cols="12"
           sm="6"
         >
-          {{model.Dormitories}}
+          {{model.Area}} m2
         </v-col>
       </v-row>
       <v-row key="2">
@@ -44,14 +44,14 @@
           cols="12"
           sm="6"
         >
-          Keuken materiaal aanwezig
+          Water
         </v-col>
         <v-col
           key="2"
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.KitchenGear"/>
+          <v-switch v-model="model.Water"/>
           
         </v-col>
       </v-row>
@@ -61,14 +61,14 @@
           cols="12"
           sm="6"
         >
-          Bedden
+          Electriciteit
         </v-col>
         <v-col
           key="2"
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.Beds"/>
+          <v-switch v-model="model.Electricity"/>
         </v-col>
       </v-row>
       <v-row>
@@ -77,29 +77,30 @@
           cols="12"
           sm="6"
         >
-          Aantal dagzalen
+          Toiletten
         </v-col>
         <v-col
           key="2"
           cols="12"
           sm="6"
         >
-          {{model.DaySpaces}}
+          <v-switch v-model="model.Toilets"/>
         </v-col>
       </v-row>
     </v-container>
-    
   </section>
-  
 
 </template>
 
 <script lang="js">
 
-  import commonDetails from "../components/common-details.vue";
+  import commonDetails from '../components/common-details.vue'
 
   export default  {
-    name: 'building-details',
+
+    
+
+    name: 'terrain-overview',
     props: [],
     mounted () {
 
@@ -124,10 +125,7 @@
 </script>
 
 <style scoped lang="scss">
-  .building-details {
-    padding: 2%;
-  }
-  v-switch{
-    margin: 0;
+  .terrain-overview {
+
   }
 </style>

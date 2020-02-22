@@ -6,6 +6,7 @@ const ajax = axios.create({
 })
 
 export default{
+    //GET
     GetTerrainsOverview(){
         return ajax.get(`${settings.baseUrlApi}/terrain`)
     },
@@ -19,5 +20,17 @@ export default{
     GetBuildingDetails(selectedRowId){
         return ajax.get(`${settings.baseUrlApi}/building`,
         {params: {id: selectedRowId}} )
+    },
+
+    //POST
+    PostNewBuilding(building){
+        return ajax.post(`${settings.baseUrlApi}/building`,
+            building
+        )
+    },
+    PostNewTerrain(terrain){
+        return ajax.post(`${settings.baseUrlApi}/terrain`,
+            terrain
+        )
     }
 }

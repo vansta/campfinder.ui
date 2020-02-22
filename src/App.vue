@@ -27,11 +27,11 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn>
-        <router-link :to="{name: 'terrainOverview'}">terrainOverview</router-link>
+      <v-btn @click="RouteToOverview('terrainOverview')">
+        Terreinen
       </v-btn>
-      <v-btn>
-        <router-link :to="{name: 'buildingOverview'}">buildingOverview</router-link>
+      <v-btn @click="RouteToOverview('buildingOverview')">
+        Gebouwen
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -64,7 +64,10 @@ export default {
   }),
   methods:{
     RouteToNewCampPlace(){
-      
+      this.$router.push({name:"newTerrain"})
+    },
+    RouteToOverview(type){
+      this.$router.push({name: type})
     }
   }
 };

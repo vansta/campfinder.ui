@@ -3,6 +3,7 @@
   <section class="terrain-overview">
     <h1>{{model.Name}}</h1>
     <commonDetails/>
+    <v-card>
     <v-container>
       <v-row key="1">
         <v-col
@@ -33,9 +34,7 @@
           cols="12"
           sm="6"
         >
-          <v-switch>
-            {{model.Forest}}
-          </v-switch>
+          <v-switch v-model="model.Forest"/>
         </v-col>
       </v-row>
       <v-row>
@@ -88,6 +87,7 @@
         </v-col>
       </v-row>
     </v-container>
+    </v-card>
   </section>
 
 </template>
@@ -126,6 +126,6 @@
 
 <style scoped lang="scss">
   .terrain-overview {
-
+    padding: 2%;
   }
 </style>

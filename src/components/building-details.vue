@@ -3,6 +3,7 @@
   <section class="building-details">
     <h1>{{model.Name}}</h1>
     <commonDetails/>
+    <v-card>
     <v-container>
       <v-row key="1">
         <v-col
@@ -88,7 +89,7 @@
         </v-col>
       </v-row>
     </v-container>
-    
+    </v-card>
   </section>
   
 

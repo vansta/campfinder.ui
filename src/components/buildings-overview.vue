@@ -60,6 +60,6 @@
 
 <style scoped lang="scss">
   .buildings-overview {
-
+    padding: 2%;
   }
 </style>

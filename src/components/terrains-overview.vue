@@ -61,6 +61,6 @@
 
 <style scoped lang="scss">
   .terrains-overview {
-
+    padding: 2%;
   }
 </style>

@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     },
     mutations:{
         setItems (state, setItems){
-            state.items = setItems
+            state.items = setItems;
         }
     }
 })

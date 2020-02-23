@@ -3,9 +3,9 @@
   <section class="search-terrain">
     <v-card>
       <v-form>
-        <v-switch v-model="searchModel.Forest" label="Bos"/>
-        <v-switch v-model="searchModel.Water" label="Water"/>
-        <v-switch v-model="searchModel.Electricity" label="Electriciteit"/>
+        <v-switch v-model="$store.state.searchModel.Forest" label="Bos"/>
+        <v-switch v-model="$store.state.searchModel.Water" label="Water"/>
+        <v-switch v-model="$store.state.searchModel.Electricity" label="Electriciteit"/>
 
         <v-btn id="searchBtn" @click="PostTerrainSearch">Zoeken</v-btn>
       </v-form>
@@ -24,14 +24,13 @@
     },
     data () {
       return {
-        searchModel:{},
-        items:[]
+        searchModel:{}
       }
     },
     methods: {
       PostTerrainSearch(){
-        this.$http.PostTerrainSearch(this.searchModel)
-          .then(resp => this.items = resp.data)
+        this.$http.PostTerrainSearch(this.$store.state.searchModel)
+          .then(resp => this.$store.commit('setItems', resp.data))
       }
     },
     computed: {

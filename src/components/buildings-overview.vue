@@ -1,7 +1,6 @@
 <template lang="html">
 
   <section class="buildings-overview">
-    {{$store.state.items}}
     <div class="searchBlock">
       <search class="search"/>
       <searchBuilding class="searchBuilding"/>
@@ -39,7 +38,7 @@
           {text:"Stad", value:"City"},
           {text:"Website", value:"Website"}
         ],
-        items: this.$store.state.items
+        items: []
       }
     },
     beforeMount(){
@@ -52,7 +51,7 @@
       },
       FillDataTableBuildings(){
         this.$http.GetBuildingsOverview()
-          .then(resp => this.$store.commit('setItems', resp.data))
+          .then(resp => this.items = resp.data)
           .catch(error => alert(error))
       },
       

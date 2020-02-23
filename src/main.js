@@ -14,6 +14,7 @@ import terrainDetails from '../src/components/terrain-details.vue';
 import newTerrain from '../src/components/new-campplace/new-common.vue';
 
 import services from '../src/Services/ApiServices';
+import { store } from "../src/stores/store";
 
 Vue.prototype.$http = services;
 
@@ -36,5 +37,6 @@ new Vue({
   vuetify,
   router,
   Axios,
+  store,
   render: h => h(App)
 }).$mount('#app')

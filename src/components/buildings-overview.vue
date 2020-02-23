@@ -1,8 +1,13 @@
 <template lang="html">
 
   <section class="buildings-overview">
-    <search/>
-    <h1>buildings overview</h1>
+    {{$store.state.items}}
+    <div class="searchBlock">
+      <search class="search"/>
+      <searchBuilding class="searchBuilding"/>
+    </div>
+    
+    <h1>Overzicht gebouwen</h1>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -15,7 +20,9 @@
 
 <script lang="js">
 
-  import search from '../components/search.vue';
+  import search from '../components/search/search.vue';
+  import searchBuilding from '../components/search/search-building.vue';
+
 
   export default  {
     name: 'buildings-overview',
@@ -26,13 +33,13 @@
     data () {
       return {
         headers: [
-          {text:"name", value:"Name"},
+          {text:"Naam", value:"Name"},
           {text:"Slaapzalen", value:"Dormitories"},
           {text:"Aantal personen", value:"AmountPersons"},
           {text:"Stad", value:"City"},
           {text:"Website", value:"Website"}
         ],
-        items: []
+        items: this.$store.state.items
       }
     },
     beforeMount(){
@@ -45,7 +52,7 @@
       },
       FillDataTableBuildings(){
         this.$http.GetBuildingsOverview()
-          .then(resp => this.items = resp.data)
+          .then(resp => this.$store.commit('setItems', resp.data))
           .catch(error => alert(error))
       },
       
@@ -58,7 +65,8 @@
     },
     
     components:{
-      search
+      search,
+      searchBuilding
     }
 }
 
@@ -68,5 +76,17 @@
 <style scoped lang="scss">
   .buildings-overview {
     padding: 2%;
+  }
+  h1{
+    clear: both;
+  }
+  .search{
+    width:50%;
+    float: left;
+  }
+  .searchBuilding{
+    width: 50%;
+    float: left;
+    margin-top: 28px;
   }
 </style>

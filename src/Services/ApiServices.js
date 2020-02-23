@@ -32,5 +32,10 @@ export default{
         return ajax.post(`${settings.baseUrlApi}/terrain`,
             terrain
         )
+    },
+    PostTerrainSearch(terrainSearch){
+        return ajax.post(`${settings.baseUrlApi}/terrain/search`,
+            terrainSearch
+        )
     }
 }

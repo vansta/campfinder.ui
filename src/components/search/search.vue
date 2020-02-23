@@ -6,6 +6,7 @@
       <v-form>
         <v-text-field v-model="searchModel.Name"  label="Naam" outlined/>
         <v-text-field v-model="searchModel.AmountPersons"  label="Aantal personen" outlined/>
+        <v-combobox :items="provinces" multiple clearable chips label="provincie" outlined/>
         <v-switch v-model="searchModel.Foreign" label='Buitenland'/>
       </v-form>
     </v-card>
@@ -23,7 +24,8 @@
     },
     data () {
       return {
-        searchModel: {}
+        searchModel: {},
+        provinces: ["West-Vlaanderen", "Oost-Vlaanderen", "Antwerpen", "Limburg", "Vlaams-Brabant", "Henegouwen", "Waals-Brabant", "Luik", "Luxemburg", "Namen"]
       }
     },
     methods: {
@@ -38,9 +40,6 @@
 </script>
 
 <style scoped lang="scss">
-  .search {
-
-  }
   form{
     padding: 2%;
   }

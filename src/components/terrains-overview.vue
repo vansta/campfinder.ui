@@ -1,7 +1,9 @@
 <template lang="html">
 
   <section class="terrains-overview">
-    <h1>Terrainoverview</h1>
+    <search class="search"/>
+    <searchTerrain class="searchTerrain"/>
+    <h1>Terreinen</h1>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -14,7 +16,11 @@
 
 <script lang="js">
 
+  import search from '../components/search/search.vue';
+  import searchTerrain from '../components/search/search-terrain.vue';
+
   export default  {
+
     name: 'terrains-overview',
     props: [],
     mounted () {
@@ -53,6 +59,10 @@
     },
     computed: {
 
+    },
+    components:{
+      search,
+      searchTerrain
     }
 }
 
@@ -62,5 +72,17 @@
 <style scoped lang="scss">
   .terrains-overview {
     padding: 2%;
+  }
+  h1{
+    clear: both;
+  }
+  .search{
+    width:50%;
+    float: left;
+  }
+  .searchTerrain{
+    width: 50%;
+    float: left;
+    margin-top: 28px;
   }
 </style>

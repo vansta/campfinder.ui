@@ -27,10 +27,10 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn @click="RouteToOverview('terrainOverview')">
+      <v-btn @click="RouteToOverview('terrain')">
         Terreinen
       </v-btn>
-      <v-btn @click="RouteToOverview('buildingOverview')">
+      <v-btn @click="RouteToOverview('building')">
         Gebouwen
       </v-btn>
 
@@ -67,7 +67,8 @@ export default {
       this.$router.push({name:"newTerrain"})
     },
     RouteToOverview(type){
-      this.$router.push({name: type})
+      this.$store.commit('setType', type)
+      this.$router.push({name: type + 'Overview'})
     }
   }
 };

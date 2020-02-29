@@ -3,10 +3,8 @@
   <section class="search-building">
     <v-card>
       <v-form>
-        <v-switch v-model="searchModel.Beds" label="Bedden"/>
-        <v-switch v-model="searchModel.KitchenGear" label="Keukenmateriaal"/>
-
-        <v-btn id="searchBtn" @click="PostBuildingSearch">Zoeken</v-btn>
+        <v-switch v-model="$store.state.searchModel.Beds" label="Bedden"/>
+        <v-switch v-model="$store.state.searchModel.KitchenGear" label="Keukenmateriaal"/>
       </v-form>
     </v-card>
   </section>
@@ -27,10 +25,7 @@
       }
     },
     methods: {
-      PostBuildingSearch(){
-        this.$http.PostBuildingSearch(this.searchModel)
-          .then(resp => this.$store.commit('setItems', resp.data))
-      }
+     
     },
     computed: {
 

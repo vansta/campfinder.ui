@@ -1,9 +1,10 @@
 <template lang="html">
 
   <section class="terrains-overview">
-    <search class="search"/>
-    <searchTerrain class="searchTerrain"/>
-    <h1>Terreinen</h1>
+    <search/>
+    <!-- <searchTerrain class="searchTerrain"/> -->
+    <h1>Overzicht terreinen</h1>
+    <v-btn id="searchBtn" @click="PostTerrainSearch">Zoeken</v-btn>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -17,7 +18,7 @@
 <script lang="js">
 
   import search from '../components/search/search.vue';
-  import searchTerrain from '../components/search/search-terrain.vue';
+  //import searchTerrain from '../components/search/search-terrain.vue';
 
   export default  {
 
@@ -36,11 +37,11 @@
           {text:"Website", value:"Website"},
           {text:"Water", value:"Water"}
         ],
-        items:[]
+        items: []
       }
     },
     beforeMount(){
-      this.FillDataTableBuildings();
+      this.PostTerrainSearch();
     },
     methods: {
       RowClicked(selectedRow){
@@ -48,13 +49,12 @@
           .then(resp => this.RouteToDetails(resp.data))
         
       },
-      FillDataTableBuildings(){
-        this.$http.GetTerrainsOverview()
-          .then(resp => this.items = resp.data)
-          .catch(error => alert(error))
-      },
       RouteToDetails(selectedCampPlace){
         this.$router.push({name: 'terrainDetails', params: {selectedCampPlace: selectedCampPlace }})
+      },
+      PostTerrainSearch(){
+        this.$http.PostTerrainSearch(this.$store.state.searchModel)
+          .then(resp => this.items = resp.data)
       }
     },
     computed: {
@@ -62,7 +62,7 @@
     },
     components:{
       search,
-      searchTerrain
+      //searchTerrain
     }
 }
 
@@ -76,13 +76,7 @@
   h1{
     clear: both;
   }
-  .search{
-    width:50%;
-    float: left;
-  }
-  .searchTerrain{
-    width: 50%;
-    float: left;
-    margin-top: 28px;
+  button{
+    width: 100%;
   }
 </style>

@@ -34,12 +34,12 @@ const routes = [
 
 const store = new Vuex.Store({
   state:{
-    items: [],
-    searchModel:{}
+    searchModel:{},
+    type: ''
   },
   mutations:{
-    setItems(state, setItems){
-      state.items = setItems;
+    setType(state, type){
+      state.type = type;
     }
   }
 })

@@ -1,12 +1,10 @@
 <template lang="html">
 
   <section class="buildings-overview">
-    <div class="searchBlock">
-      <search class="search"/>
-      <searchBuilding class="searchBuilding"/>
-    </div>
+      <search/>
     
     <h1>Overzicht gebouwen</h1>
+    <v-btn id="searchBtn" @click="PostBuildingSearch">Zoeken</v-btn>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -20,7 +18,7 @@
 <script lang="js">
 
   import search from '../components/search/search.vue';
-  import searchBuilding from '../components/search/search-building.vue';
+  //import searchBuilding from '../components/search/search-building.vue';
 
 
   export default  {
@@ -38,25 +36,24 @@
           {text:"Stad", value:"City"},
           {text:"Website", value:"Website"}
         ],
-        items: []
+        items: this.$store.state.items
       }
     },
     beforeMount(){
-      this.FillDataTableBuildings();
+      this.PostBuildingSearch();
     },
     methods: {
       RowClicked(selectedRow){
         this.$http.GetBuildingDetails(selectedRow.Id)
           .then(resp => this.RouteToDetails(resp.data))
       },
-      FillDataTableBuildings(){
-        this.$http.GetBuildingsOverview()
-          .then(resp => this.items = resp.data)
-          .catch(error => alert(error))
-      },
-      
       RouteToDetails(selectedCampPlace){
         this.$router.push({name: 'buildingDetails', params: {selectedCampPlace: selectedCampPlace }})
+      },
+       PostBuildingSearch(){
+        this.$http.PostBuildingSearch(this.$store.state.searchModel)
+          .then(resp => this.items = resp.data)
+          .then(this.$nextTick())
       }
     },
     computed: {
@@ -65,7 +62,7 @@
     
     components:{
       search,
-      searchBuilding
+      //searchBuilding
     }
 }
 
@@ -79,13 +76,7 @@
   h1{
     clear: both;
   }
-  .search{
-    width:50%;
-    float: left;
-  }
-  .searchBuilding{
-    width: 50%;
-    float: left;
-    margin-top: 28px;
+  button{
+    width: 100%;
   }
 </style>

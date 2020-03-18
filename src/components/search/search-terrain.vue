@@ -25,7 +25,6 @@
       }
     },
     methods: {
-
     },
     computed: {
 

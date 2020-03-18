@@ -1,5 +1,5 @@
 const settings = {
-    baseUrlApi: 'https://localhost:44307/api'
+    baseUrlApi: 'https://localhost:44395/api'
 }
 
 export default settings

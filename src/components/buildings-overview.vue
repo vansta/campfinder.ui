@@ -30,11 +30,11 @@
     data () {
       return {
         headers: [
-          {text:"Naam", value:"Name"},
-          {text:"Slaapzalen", value:"Dormitories"},
-          {text:"Aantal personen", value:"AmountPersons"},
-          {text:"Stad", value:"City"},
-          {text:"Website", value:"Website"}
+          {text:"Naam", value:"name"},
+          {text:"Slaapzalen", value:"dormitories"},
+          {text:"Aantal personen", value:"amountPersons"},
+          {text:"Stad", value:"city"},
+          {text:"Website", value:"website"}
         ],
         items: this.$store.state.items
       }
@@ -44,7 +44,7 @@
     },
     methods: {
       RowClicked(selectedRow){
-        this.$http.GetBuildingDetails(selectedRow.Id)
+        this.$http.GetBuildingDetails(selectedRow.id)
           .then(resp => this.RouteToDetails(resp.data))
       },
       RouteToDetails(selectedCampPlace){
@@ -53,7 +53,6 @@
        PostBuildingSearch(){
         this.$http.PostBuildingSearch(this.$store.state.searchModel)
           .then(resp => this.items = resp.data)
-          .then(this.$nextTick())
       }
     },
     computed: {

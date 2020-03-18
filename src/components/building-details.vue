@@ -1,7 +1,7 @@
 <template lang="html">
 
   <section class="building-details">
-    <h1>{{model.Name}}</h1>
+    <h1>{{model.name}}</h1>
     <commonDetails/>
     <v-card>
     <v-container>
@@ -18,7 +18,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Dormitories}}
+          {{model.dormitories}}
         </v-col>
       </v-row>
       <v-row key="2">
@@ -35,7 +35,7 @@
           sm="6"
         >
           <v-switch>
-            {{model.Forest}}
+            {{model.forest}}
           </v-switch>
         </v-col>
       </v-row>
@@ -52,7 +52,7 @@
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.KitchenGear"/>
+          <v-switch v-model="model.kitchenGear"/>
           
         </v-col>
       </v-row>
@@ -69,7 +69,7 @@
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.Beds"/>
+          <v-switch v-model="model.beds"/>
         </v-col>
       </v-row>
       <v-row>
@@ -85,7 +85,7 @@
           cols="12"
           sm="6"
         >
-          {{model.DaySpaces}}
+          {{model.daySpaces}}
         </v-col>
       </v-row>
     </v-container>

@@ -18,7 +18,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Area}} m2
+          {{model.area}} m2
         </v-col>
       </v-row>
       <v-row key="2">
@@ -34,7 +34,7 @@
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.Forest"/>
+          <v-switch v-model="model.forest"/>
         </v-col>
       </v-row>
       <v-row>
@@ -50,7 +50,7 @@
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.Water"/>
+          <v-switch v-model="model.water"/>
           
         </v-col>
       </v-row>
@@ -67,7 +67,7 @@
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.Electricity"/>
+          <v-switch v-model="model.electricity"/>
         </v-col>
       </v-row>
       <v-row>
@@ -83,7 +83,7 @@
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.Toilets"/>
+          <v-switch v-model="model.toilets"/>
         </v-col>
       </v-row>
     </v-container>

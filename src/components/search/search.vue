@@ -4,11 +4,11 @@
     <h1 @click="hideSearch">Zoeken</h1>
     <div :class="hide">
     <v-card class="searchGeneral">
-      <v-form>
-        <v-text-field v-model="$store.state.searchModel.Name"  label="Naam" outlined/>
-        <v-text-field v-model="$store.state.searchModel.AmountPersons"  label="Aantal personen" outlined/>
-        <v-combobox :items="provinces" v-model="$store.state.searchModel.Province" multiple clearable chips label="provincie" outlined/>
-        <v-switch v-model="$store.state.searchModel.Foreign" label='Buitenland'/>
+      <v-form @change="searchFormChanged">
+        <v-text-field v-model="$store.state.searchModel.name"  label="Naam" outlined/>
+        <v-text-field v-model="$store.state.searchModel.amountPersons"  label="Aantal personen" outlined/>
+        <v-combobox :items="provinces" v-model="$store.state.searchModel.province" multiple clearable chips label="provincie" outlined/>
+        <v-switch v-model="$store.state.searchModel.foreign" label='Buitenland'/>
       </v-form>
     </v-card>
     <searchBuilding v-if="this.type == 'building'" class="searchSpecific"/>
@@ -46,6 +46,7 @@
           this.hide = ""
         }
       }
+    
     },
     computed: {
 

@@ -2,7 +2,7 @@
 
   <section class="search-building">
     <v-card>
-      <v-form>
+      <v-form >
         <v-switch v-model="$store.state.searchModel.Beds" label="Bedden"/>
         <v-switch v-model="$store.state.searchModel.KitchenGear" label="Keukenmateriaal"/>
       </v-form>
@@ -25,7 +25,9 @@
       }
     },
     methods: {
-     
+     searchFormChanged(){
+        this.$store.commit('setSearchModel', this.$store.state.searchModel)
+      }
     },
     computed: {
 

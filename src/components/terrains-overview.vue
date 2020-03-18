@@ -30,12 +30,12 @@
     data () {
       return {
         headers: [
-          {text:"Naam", value:"Name"},
-          {text:"Oppervlakte", value:"Area"},
-          {text:"Aantal personen", value:"AmountPersons"},
-          {text:"Stad", value:"City"},
-          {text:"Website", value:"Website"},
-          {text:"Water", value:"Water"}
+          {text:"Naam", value:"name"},
+          {text:"Oppervlakte", value:"area"},
+          {text:"Aantal personen", value:"amountPersons"},
+          {text:"Stad", value:"city"},
+          {text:"Website", value:"website"},
+          {text:"Water", value:"water"}
         ],
         items: []
       }
@@ -45,9 +45,8 @@
     },
     methods: {
       RowClicked(selectedRow){
-        this.$http.GetTerrainDetails(selectedRow.Id)
+        this.$http.GetTerrainDetails(selectedRow.id)
           .then(resp => this.RouteToDetails(resp.data))
-        
       },
       RouteToDetails(selectedCampPlace){
         this.$router.push({name: 'terrainDetails', params: {selectedCampPlace: selectedCampPlace }})

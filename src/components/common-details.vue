@@ -19,7 +19,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Name}}
+          {{model.name}}
         </v-col>
       </v-row>
       <v-row
@@ -37,7 +37,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Website}}
+          {{model.website}}
         </v-col>
       </v-row>
       <v-row
@@ -55,7 +55,7 @@
           cols="12"
           sm="6"
         >
-          {{model.AmountPersons}}
+          {{model.amountPersons}}
         </v-col>
       </v-row>
       
@@ -79,7 +79,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Place.Street}}
+          {{model.place.street}}
         </v-col>
       </v-row>
       <v-row
@@ -97,7 +97,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Place.HouseNumber}}
+          {{model.place.houseNumber}}
         </v-col>
       </v-row>
       <v-row
@@ -115,7 +115,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Place.City}}
+          {{model.place.city}}
         </v-col>
       </v-row>
       <v-row
@@ -133,7 +133,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Place.PostNumber}}
+          {{model.place.postNumber}}
         </v-col>
       </v-row>
       <v-row
@@ -151,7 +151,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Place.Province}}
+          {{model.place.province}}
         </v-col>
       </v-row>
       <v-row
@@ -169,7 +169,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Place.Country}}
+          {{model.place.country}}
         </v-col>
       </v-row>
     </v-container>
@@ -193,7 +193,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Person.FirstName}}
+          {{model.person.firstName}}
         </v-col>
       </v-row>
       <v-row
@@ -211,7 +211,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Person.LastName}}
+          {{model.person.lastName}}
         </v-col>
       </v-row>
       <v-row
@@ -229,7 +229,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Person.MailAdress}}
+          {{model.person.mailAdress}}
         </v-col>
       </v-row>
       <v-row
@@ -247,7 +247,7 @@
           cols="12"
           sm="6"
         >
-          {{model.Person.TelephoneNumber}}
+          {{model.person.telephoneNumber}}
         </v-col>
       </v-row>
       

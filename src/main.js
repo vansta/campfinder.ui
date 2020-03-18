@@ -40,6 +40,9 @@ const store = new Vuex.Store({
   mutations:{
     setType(state, type){
       state.type = type;
+    },
+    setSearchModel(state, newSearchModel){
+      state.searchModel = newSearchModel;
     }
   }
 })

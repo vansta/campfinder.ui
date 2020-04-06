@@ -48,6 +48,14 @@
     <v-content>
       <router-view></router-view>
     </v-content>
+    <v-footer padless>
+      <v-col
+        class="text-center"
+        cols="12"
+      >
+      Scouting Roeselare - Vancraeynest Projects
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 

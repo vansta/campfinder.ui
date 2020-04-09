@@ -1,9 +1,10 @@
 <template lang="html">
 
-  <section class="terrain-overview">
-    <h1>{{model.Name}}</h1>
+  <section class="building-details">
+    <h1>{{model.name}}</h1>
     <commonDetails/>
     <v-card>
+    <h2>Gebouw</h2>
     <v-container>
       <v-row key="1">
         <v-col
@@ -11,14 +12,14 @@
           cols="12"
           sm="6"
         >
-          Oppervlakte
+          Slaapzalen
         </v-col>
         <v-col
           key="2"
           cols="12"
           sm="6"
         >
-          {{model.area}} m2
+          {{model.dormitories}}
         </v-col>
       </v-row>
       <v-row key="2">
@@ -34,7 +35,7 @@
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.forest"/>
+          <v-checkbox v-model="model.beds" disabled/>
         </v-col>
       </v-row>
       <v-row>
@@ -43,14 +44,14 @@
           cols="12"
           sm="6"
         >
-          Water
+          Keuken materiaal aanwezig
         </v-col>
         <v-col
           key="2"
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.water"/>
+          <v-checkbox v-model="model.kitchenGear" disabled/>
           
         </v-col>
       </v-row>
@@ -60,14 +61,14 @@
           cols="12"
           sm="6"
         >
-          Electriciteit
+          Bedden
         </v-col>
         <v-col
           key="2"
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.electricity"/>
+          <v-checkbox v-model="model.beds" disabled/>
         </v-col>
       </v-row>
       <v-row>
@@ -76,31 +77,29 @@
           cols="12"
           sm="6"
         >
-          Toiletten
+          Aantal dagzalen
         </v-col>
         <v-col
           key="2"
           cols="12"
           sm="6"
         >
-          <v-switch v-model="model.toilets"/>
+          {{model.daySpaces}}
         </v-col>
       </v-row>
     </v-container>
     </v-card>
   </section>
+  
 
 </template>
 
 <script lang="js">
 
-  import commonDetails from '../components/common-details.vue'
+  import commonDetails from "../details/common-details";
 
   export default  {
-
-    
-
-    name: 'terrain-overview',
+    name: 'building-details',
     props: [],
     mounted () {
 
@@ -125,7 +124,13 @@
 </script>
 
 <style scoped lang="scss">
-  .terrain-overview {
+  .building-details {
     padding: 2%;
+  }
+  .v-card{
+    padding:2%;
+  }
+  .container{
+    padding: 1%;
   }
 </style>

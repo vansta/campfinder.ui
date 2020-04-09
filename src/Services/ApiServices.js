@@ -25,6 +25,10 @@ export default{
         return ajax.get(`${settings.baseUrlApi}/building`,
         {params: {id: selectedRowId}} )
     },
+    GetReviewsById(id){
+        return ajax.get(`${settings.baseUrlApi}/reviews`, 
+        {params: {id: id}})
+    },
 
     //POST
     PostNewBuilding(building){
@@ -45,6 +49,11 @@ export default{
     PostBuildingSearch(buildingSearch){
         return ajax.post(`${settings.baseUrlApi}/building/search`,
             buildingSearch
+        )
+    },
+    PostNewReview(review){
+        return ajax.post(`${settings.baseUrlApi}/reviews`, 
+            review
         )
     }
 }

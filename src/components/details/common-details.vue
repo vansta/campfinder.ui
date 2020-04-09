@@ -58,6 +58,12 @@
           {{model.amountPersons}}
         </v-col>
       </v-row>
+       <v-row
+      key="4"
+      >
+          <v-btn type="button" @click="RouteToReviews">Reviews</v-btn>
+          <v-btn type="button" @click="RouteToNewReview">Nieuwe review</v-btn>
+      </v-row>
       
     </v-container>
     </v-card>
@@ -271,7 +277,11 @@
       }
     },
     methods: {
-
+      RouteToReviews(){
+        if(this.$route.path != '/reviews'){
+          this.$router.push({name:'reviews', params: {model: this.model}});
+        }
+      }
     },
     computed: {
 
@@ -284,5 +294,11 @@
 <style scoped lang="scss">
   .common-details {
 
+  }
+  .v-card{
+    padding:2%;
+  }
+  .container{
+    padding: 1%;
   }
 </style>

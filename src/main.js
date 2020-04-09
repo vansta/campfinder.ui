@@ -11,11 +11,12 @@ Vue.use(Vuex)
 
 import terrainOverview from '../src/components/terrains-overview.vue';
 import buildingOverview from '../src/components/buildings-overview.vue';
-import commonDetails from '../src/components/common-details.vue';
-import buildingDetails from '../src/components/building-details.vue';
-import terrainDetails from '../src/components/terrain-details.vue';
+import commonDetails from '../src/components/details/common-details.vue';
+import buildingDetails from '../src/components/details/building-details.vue';
+import terrainDetails from '../src/components/details/terrain-details.vue';
 import newTerrain from '../src/components/new-campplace/new-common.vue';
 import search from '../src/components/search/search.vue';
+import reviews from '../src/components/reviews.vue'
 
 import services from '../src/Services/ApiServices';
 //import { store } from "../src/stores/store";
@@ -29,7 +30,8 @@ const routes = [
   {path: '/details/building', name:"buildingDetails", component: buildingDetails},
   {path: '/details/terrain', name:"terrainDetails", component: terrainDetails },
   {path: '/new/terrain', name:"newTerrain", component: newTerrain},
-  {path: '/search', name: 'search', component: search}
+  {path: '/search', name: 'search', component: search},
+  {path: '/reviews', name: 'reviews', component: reviews}
 ]
 
 const store = new Vuex.Store({

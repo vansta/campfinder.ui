@@ -1,20 +1,19 @@
 <template lang="html">
 
   <section class="new-common">
-    <h1>Nieuwe kampplaats</h1>
     <v-card class="form">
       <h2>Algemeen</h2>
-      <v-form v-model="valid">
+      <v-form v-model="valid" lazy-validation>
         <v-text-field v-model="model.Name" label="Naam" :rules="[rules.required]" outlined/>
         <v-text-field v-model="model.Website" label="Website" outlined/>
         <v-text-field v-model="model.AmountPersons" label="Aantal personen" :rules="[rules.required, rules.int]" outlined/>
         <v-switch v-model="model.Forest" label="Bos"/>
-        <v-text-field v-model="model.Area" label="Oppervlakte" :rules="[rules.required, rules.double]" outlined/>
+        <v-text-field v-model="model.Area" label="Oppervlakte" :rules="[rules.double]" outlined hint="Schatting in m²"/>
       </v-form>
     </v-card>
     <v-card class="form">
       <h2>Verhuurder</h2>
-      <v-form v-model="valid">
+      <v-form v-model="valid" lazy-validation>
         <v-text-field v-model="model.Person.FirstName" label="Voornaam" outlined/>
         <v-text-field v-model="model.Person.LastName" label="Familienaam" outlined/>
         <v-text-field v-model="model.Person.MailAdress" label="Email" outlined/>
@@ -23,7 +22,7 @@
     </v-card>
     <v-card class="form">
       <h2>Plaats</h2>
-      <v-form v-model="valid">
+      <v-form v-model="valid" lazy-validation>
         <v-text-field v-model="model.Place.Street" label="Straat" :rules="[rules.required]" outlined/>
         <v-text-field v-model="model.Place.HouseNumber" label="Nummer" outlined/>
         <v-text-field v-model="model.Place.PostNumber" label="Postcode" outlined/>
@@ -39,7 +38,7 @@
 
     <v-card class="form" v-if="type == 'terrain'">
       <h2>Terrein</h2>
-      <v-form v-model="valid">
+      <v-form v-model="valid" lazy-validation>
         <v-switch v-model="model.Water" label="Water"/>
         <v-switch v-model="model.Electricity" label="Electriciteit"/>
         <v-switch v-model="model.Toilets" label="Toiletten"/>
@@ -47,7 +46,7 @@
     </v-card>
     <v-card class="form" v-if="type == 'building'">
       <h2>Gebouw</h2>
-      <v-form v-model="valid">
+      <v-form v-model="valid" lazy-validation>
         <v-text-field v-model="model.Dormitories" :rules="[rules.required, rules.int]" label="Aantal slaapzalen" outlined/>
         <v-text-field v-model="model.DaySpaces" :rules="[rules.required, rules.int]" label="Aantal dagzalen" outlined/>
         <v-switch v-model="model.KitchenGear" label="Keukenmateriaal aanwezig" outlined/>
@@ -83,7 +82,7 @@
           },
           required: value => !!value || "Verplicht veld.",
           double: value => {
-            const pattern = /^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$/
+            const pattern = /(^(\d+)(,\d+|\.\d+)?|(^)|NULL)$/
             return pattern.test(value) || "Waarde moet een getal zijn."
           }
         },

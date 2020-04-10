@@ -180,7 +180,7 @@
         </v-col>
       </v-row>
       <v-row
-      key="4"
+      key="6"
       >
         <v-col
           key="1"
@@ -292,7 +292,7 @@
     },
     data () {
       return {
-        model: this.$route.params.selectedCampPlace
+        model: this.$store.state.selectedCampPlace //this.$route.params.selectedCampPlace
       }
     },
     methods: {

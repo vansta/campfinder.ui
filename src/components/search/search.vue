@@ -4,7 +4,7 @@
     <h1 @click="hideSearch">Zoeken</h1>
     <div :class="hide">
     <v-card class="searchGeneral">
-      <v-form @change="searchFormChanged">
+      <v-form>
         <v-text-field v-model="$store.state.searchModel.name"  label="Naam" outlined/>
         <v-text-field v-model="$store.state.searchModel.amountPersons"  label="Aantal personen" outlined/>
         <v-combobox :items="provinces" v-model="$store.state.searchModel.province" multiple clearable chips label="provincie" outlined/>

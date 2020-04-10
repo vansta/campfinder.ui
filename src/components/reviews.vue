@@ -107,9 +107,10 @@
               label="Datum"
               readonly
               v-on="on"
+              :rules="[rules.required]"
             ></v-text-field>
           </template>
-          <v-date-picker v-model="newReview.date" no-title scrollable>
+          <v-date-picker  v-model="newReview.date" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
           </v-date-picker>
@@ -120,7 +121,7 @@
           cols="12"
           sm="4"
         >
-          <v-btn type="submit" class="fullwidth" @click="SendNewReview">Verzenden</v-btn>
+          <v-btn :disabled="!valid" type="submit" class="fullwidth" @click="SendNewReview">Verzenden</v-btn>
         </v-col>
       </v-row>
       </v-form>
@@ -178,11 +179,14 @@
         }
       },
       SendNewReview(){
-        this.newReview.campPlaceId = this.model.id
-        this.$http.PostNewReview(this.newReview)
-          .then(resp => this.reviews.push(resp.data))
-          .then(() => this.newReview = null)
-          .catch(error => alert(error))
+        if (this.valid){
+          this.newReview.campPlaceId = this.model.id
+          this.$http.PostNewReview(this.newReview)
+            .then(resp => this.reviews.push(resp.data))
+            .then(() => this.newReview = {})
+            .catch(error => alert(error))
+        }
+        
       }
     },
     computed: {

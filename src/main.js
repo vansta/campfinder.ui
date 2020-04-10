@@ -43,7 +43,8 @@ const routes = [
 const store = new Vuex.Store({
   state:{
     searchModel:{},
-    type: ''
+    type: '',
+    selectedCampPlace: {}
   },
   mutations:{
     setType(state, type){
@@ -51,6 +52,9 @@ const store = new Vuex.Store({
     },
     setSearchModel(state, newSearchModel){
       state.searchModel = newSearchModel;
+    },
+    SetCampPlace(state, campPlace){
+        state.selectedCampPlace = campPlace;
     }
   }
 })

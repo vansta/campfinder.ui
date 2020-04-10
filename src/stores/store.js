@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        items: []
+        items: [],
+        selectedCampPlace: {}
     },
     mutations:{
         setItems (state, setItems){
             state.items = setItems;
+        },
+        SetCampPlace(state, campPlace){
+            state.selectedCampPlace = campPlace;
         }
     }
 })

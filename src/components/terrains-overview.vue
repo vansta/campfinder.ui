@@ -50,10 +50,11 @@
     methods: {
       RowClicked(selectedRow){
         this.$http.GetTerrainDetails(selectedRow.id)
-          .then(resp => this.RouteToDetails(resp.data))
+          .then(resp => this.$store.commit('SetCampPlace', resp.data))
+          .then(() => this.RouteToDetails())
       },
-      RouteToDetails(selectedCampPlace){
-        this.$router.push({name: 'terrainDetails', params: {selectedCampPlace: selectedCampPlace }})
+      RouteToDetails(){
+        this.$router.push({name: 'terrainDetails'})
       },
       PostTerrainSearch(){
         this.$http.PostTerrainSearch(this.$store.state.searchModel)

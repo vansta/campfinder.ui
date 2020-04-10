@@ -45,10 +45,11 @@
     methods: {
       RowClicked(selectedRow){
         this.$http.GetBuildingDetails(selectedRow.id)
-          .then(resp => this.RouteToDetails(resp.data))
+          .then(resp => this.$store.commit('SetCampPlace', resp.data))
+          .then(() => this.RouteToDetails())
       },
-      RouteToDetails(selectedCampPlace){
-        this.$router.push({name: 'buildingDetails', params: {selectedCampPlace: selectedCampPlace }})
+      RouteToDetails(){
+        this.$router.push({name: 'buildingDetails'})
       },
        PostBuildingSearch(){
         this.$http.PostBuildingSearch(this.$store.state.searchModel)

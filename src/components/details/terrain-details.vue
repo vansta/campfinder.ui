@@ -104,11 +104,14 @@
     name: 'terrain-overview',
     props: [],
     mounted () {
-
+      // this.$http.GetTerrainDetails(this.$route.params.id)
+      //   //.then(resp => this.model = resp.data)
+      //   .then(resp => this.$store.commit('SetCampPlace', resp.data))
+      //   .catch(error => alert(error))
     },
     data () {
       return {
-        model: this.$route.params.selectedCampPlace
+        model: this.$store.state.selectedCampPlace
       }
     },
     methods: {

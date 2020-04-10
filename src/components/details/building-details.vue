@@ -1,7 +1,6 @@
 <template lang="html">
 
   <section class="building-details">
-    <h1>{{model.name}}</h1>
     <commonDetails/>
     <v-card>
     <h2>Gebouw</h2>
@@ -96,17 +95,20 @@
 
 <script lang="js">
 
-  import commonDetails from "../details/common-details";
+  import commonDetails from "../details/common-details.vue";
 
   export default  {
     name: 'building-details',
     props: [],
     mounted () {
-
+      // this.$http.GetBuildingDetails(this.$route.params.id)
+      //   //.then(resp => this.model = resp.data)
+      //   .then(resp => this.$store.commit('SetCampPlace', resp.data))
+      //   .catch(error => alert(error))
     },
     data () {
       return {
-        model: this.$route.params.selectedCampPlace
+        model: this.$store.state.selectedCampPlace
       }
     },
     methods: {

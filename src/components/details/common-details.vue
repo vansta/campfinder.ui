@@ -58,12 +58,31 @@
           {{model.amountPersons}}
         </v-col>
       </v-row>
-       <v-row
+      <v-row
       key="4"
+      >
+        <v-col
+          key="1"
+          cols="12"
+          sm="6"
+        >
+          Score
+        </v-col>
+        <v-col
+          key="2"
+          cols="12"
+          sm="6"
+        >
+          <v-rating readonly v-model="model.averageScore"/>
+        </v-col>
+      </v-row>
+       <v-row
+      key="5"
       >
           <v-btn type="button" @click="RouteToReviews">Reviews</v-btn>
           <v-btn type="button" @click="RouteToNewReview">Nieuwe review</v-btn>
       </v-row>
+      
       
     </v-container>
     </v-card>
@@ -279,6 +298,12 @@
     methods: {
       RouteToReviews(){
         if(this.$route.path != '/reviews'){
+          this.$router.push({name:'reviews', params: {model: this.model}});
+        }
+      },
+      RouteToNewReview(){
+        if(this.$route.path != '/reviews'){
+          this.model.new = true;
           this.$router.push({name:'reviews', params: {model: this.model}});
         }
       }

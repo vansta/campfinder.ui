@@ -4,6 +4,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import VueRouter from 'vue-router'
 import Axios from 'axios'
+import moment from 'moment'
 
 Vue.config.productionTip = false
 
@@ -22,6 +23,11 @@ import services from '../src/Services/ApiServices';
 //import { store } from "../src/stores/store";
 
 Vue.prototype.$http = services;
+Vue.filter('formatDate', function(value){
+  if (value){
+    return moment(String(value)).format('DD/MM/YYYY')
+  }
+})
 
 const routes = [
   {path: '/overview/terrain', name:"terrainOverview", component: terrainOverview},

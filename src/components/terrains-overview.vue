@@ -10,6 +10,9 @@
       :items="items"
       @click:row="RowClicked"
     >
+    <!-- <template v-slot:item.averageScore="{ item }">
+           <span><v-rating v-model="item.averageScore"></v-rating></span>
+         </template> -->
     </v-data-table>
   </section>
 
@@ -35,7 +38,8 @@
           {text:"Aantal personen", value:"amountPersons"},
           {text:"Stad", value:"city"},
           {text:"Website", value:"website"},
-          {text:"Water", value:"water"}
+          {text:"Water", value:"water"},
+          {text:"Score", value:"averageScore", dataType:'rating'}
         ],
         items: []
       }

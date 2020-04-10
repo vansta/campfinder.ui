@@ -57,8 +57,73 @@
         >
           {{model.amountPersons}}
         </v-col>
-      </v-row>     
+      </v-row>   
+      <v-row
+      key="4"
+      >
+        <v-col
+          key="1"
+          cols="12"
+          sm="6"
+        >
+          Aantal personen
+        </v-col>
+        <v-col
+          key="2"
+          cols="12"
+          sm="6"
+        >
+          <v-btn type="submit" class="fullwidth" @click="enableNew = !enableNew">Nieuwe review</v-btn>
+        </v-col>
+      </v-row>  
     </v-container>
+    </v-card>
+    <v-card v-if="enableNew">
+      <v-form v-model="valid" lazy-validation>
+        <v-textarea v-model="newReview.note" label="Opmerking" outlined/>
+          <v-row key="1">
+        <v-col
+          key="1"
+          cols="12"
+          sm="4"
+        >
+          <v-rating v-model="newReview.score" label="Score"/>
+        </v-col>
+        <v-col
+          key="2"
+          cols="12"
+          sm="4"
+        >
+          <v-menu
+          v-model="menu"
+          :close-on-content-click="true"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on }">
+            <v-text-field
+              v-model="newReview.date"
+              label="Datum"
+              readonly
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="newReview.date" no-title scrollable>
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+          </v-date-picker>
+        </v-menu>
+        </v-col>
+        <v-col
+          key="3"
+          cols="12"
+          sm="4"
+        >
+          <v-btn type="submit" class="fullwidth" @click="SendNewReview">Verzenden</v-btn>
+        </v-col>
+      </v-row>
+      </v-form>
     </v-card>
     <v-item-group>
       <v-row>
@@ -67,7 +132,12 @@
           :key=i
         >
         <v-card>
-          {{review}}
+          <div class="text-center">
+            
+            {{review.date | formatDate}}
+            <v-rating readonly v-model="review.score"/>
+            {{review.note}}
+          </div>
         </v-card>
         </v-col>
       </v-row>
@@ -91,11 +161,29 @@
     data () {
       return {
         model: this.$route.params.model,
-        reviews:['test','test2','test3']
+        reviews:['test','test2','test3'],
+        newReview:{},
+        rules: {
+          required: value => !!value || "Verplicht veld."
+        },
+        valid: false,
+        enableNew: this.$route.params.model.new,
+        menu: false
       }
     },
     methods: {
-
+      FormatDate(date){
+        if (date){
+          return String(date).format('ddMMyyyy')
+        }
+      },
+      SendNewReview(){
+        this.newReview.campPlaceId = this.model.id
+        this.$http.PostNewReview(this.newReview)
+          .then(resp => this.reviews.push(resp.data))
+          .then(() => this.newReview = null)
+          .catch(error => alert(error))
+      }
     },
     computed: {
 
@@ -114,5 +202,8 @@
   }
   .container{
     padding: 1%;
+  }
+  button{
+    float:right;
   }
 </style>

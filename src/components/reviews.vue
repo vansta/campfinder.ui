@@ -121,7 +121,7 @@
           cols="12"
           sm="4"
         >
-          <v-btn :disabled="!valid" type="submit" class="fullwidth" @click="SendNewReview">Verzenden</v-btn>
+          <v-btn :disabled="!valid" type="submit" class="fullwidth" @click="SendNewReview" :loading="loading">Verzenden</v-btn>
         </v-col>
       </v-row>
       </v-form>
@@ -168,8 +168,9 @@
           required: value => !!value || "Verplicht veld."
         },
         valid: false,
-        enableNew: this.$route.params.model.new,
-        menu: false
+        enableNew: false,
+        menu: false,
+        loading: false
       }
     },
     methods: {
@@ -180,10 +181,12 @@
       },
       SendNewReview(){
         if (this.valid){
+          this.loading = true;
           this.newReview.campPlaceId = this.model.id
           this.$http.PostNewReview(this.newReview)
             .then(resp => this.reviews.push(resp.data))
             .then(() => this.newReview = {})
+            .then(() => this.loading = false)
             .catch(error => alert(error))
         }
         

@@ -10,8 +10,6 @@ Vue.config.productionTip = false
 
 Vue.use(Vuex)
 
-import terrainOverview from '../src/components/terrains-overview.vue';
-import buildingOverview from '../src/components/buildings-overview.vue';
 import commonDetails from '../src/components/details/common-details.vue';
 import buildingDetails from '../src/components/details/building-details.vue';
 import terrainDetails from '../src/components/details/terrain-details.vue';
@@ -30,8 +28,6 @@ Vue.filter('formatDate', function(value){
 })
 
 const routes = [
-  {path: '/overview/terrain', name:"terrainOverview", component: terrainOverview},
-  {path: '/overview/building', name:"buildingOverview", component: buildingOverview},
   {path: '/details', name:"commonDetails", component: commonDetails},
   {path: '/details/building', name:"buildingDetails", component: buildingDetails},
   {path: '/details/terrain', name:"terrainDetails", component: terrainDetails },

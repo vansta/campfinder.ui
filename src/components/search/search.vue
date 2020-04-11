@@ -23,7 +23,7 @@
     
     </div>
     <h1>Overzicht {{title}}</h1>
-    <v-btn block @click="PostSearch" color="primary">Zoeken</v-btn>
+    <v-btn block @click="PostSearch" color="primary" :loading="loading">Zoeken</v-btn>
     <v-data-table
       :headers="headers"
       :items="items"
@@ -57,7 +57,8 @@
         hide: '',
         headers: [], 
         items: this.$store.state.items,
-        title: this.Title()
+        title: this.Title(),
+        loading: false
       }
     },
     methods: {
@@ -70,14 +71,16 @@
         }
       },
       PostSearch(){
+        this.loading = true;
         if(this.type == 'building'){
             this.$http.PostBuildingSearch(this.$store.state.searchModel)
               .then(resp => this.items = resp.data)
+              .then(() => this.loading = false)
         }
         else{
               this.$http.PostTerrainSearch(this.$store.state.searchModel)
                 .then(resp => this.items = resp.data)
-            
+                .then(() => this.loading = false)
         }
       },
       GetHeaders(){

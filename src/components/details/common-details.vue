@@ -292,7 +292,11 @@
     },
     data () {
       return {
-        model: this.$store.state.selectedCampPlace //this.$route.params.selectedCampPlace
+        model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
+        general: true,
+        place: true,
+        person: true,
+
       }
     },
     methods: {

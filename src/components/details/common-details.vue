@@ -37,7 +37,7 @@
           cols="12"
           sm="6"
         >
-          {{model.website}}
+          <a :href="model.website">{{model.website}}</a>
         </v-col>
       </v-row>
       <v-row

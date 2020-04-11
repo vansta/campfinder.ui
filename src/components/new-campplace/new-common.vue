@@ -32,8 +32,8 @@
       </v-form>
     </v-card>
     <v-form>
-      <v-btn @click="type = 'terrain'">Terrein</v-btn>
-      <v-btn @click="type = 'building'">Gebouw</v-btn>
+      <v-btn @click="type = 'terrain'" :color="GetColor('terrain')" :depressed="this.type != 'terrain'">Terrein</v-btn>
+      <v-btn @click="type = 'building'" :color="GetColor('building')" :depressed="this.type != 'building'">Gebouw</v-btn>
     </v-form>
 
     <v-card class="form" v-if="type == 'terrain'">
@@ -53,7 +53,7 @@
         <v-switch v-model="model.Beds" label="Bedden" outlined/>
       </v-form>
     </v-card>
-    <v-btn class="fullwidth" @click="SendNewCampPlace" :disabled="!valid || type == ''">Verzenden</v-btn>
+    <v-btn block color="primary" @click="SendNewCampPlace" :disabled="!valid || type == ''">Verzenden</v-btn>
   </section>
 
 </template>
@@ -91,13 +91,23 @@
     },
     methods: {
       SendNewCampPlace(){
-        if (this.type == 'terrain'){
-          this.$http.PostNewTerrain(this.model)
-            .then(() => this.$router.push({name: 'terrainOverview'}))
+        if (this.valid){
+          if (this.type == 'terrain'){
+            this.$http.PostNewTerrain(this.model)
+              .then(() => this.$router.push({name: 'terrainOverview'}))
+          }
+          else{
+            this.$http.PostNewBuilding(this.model)
+              .then(() => this.$router.push({name: 'buildingOverview'}))
+          }
+        }
+      },
+      GetColor(buttonType){
+        if (this.type == buttonType){
+          return 'primary'
         }
         else{
-          this.$http.PostNewBuilding(this.model)
-            .then(() => this.$router.push({name: 'buildingOverview'}))
+          return 'indigo lighten-5'
         }
       }
     },
@@ -110,23 +120,18 @@
 </script>
 
 <style scoped lang="scss">
-  .new-common {
-    padding: 2%;
-  }
   .form{
     padding: 2%;
   }
   button{
-    width: 48%;
-    margin: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: 50%;
   }
   .btn-fixed{
     position:absolute;
     bottom: 2%;
     z-index: 25;
     right: 2%;
-  }
-  .fullwidth{
-    width: 100%;
   }
 </style>

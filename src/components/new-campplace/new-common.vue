@@ -93,9 +93,11 @@
       SendNewCampPlace(){
         if (this.type == 'terrain'){
           this.$http.PostNewTerrain(this.model)
+            .then(() => this.$router.push({name: 'terrainOverview'}))
         }
         else{
           this.$http.PostNewBuilding(this.model)
+            .then(() => this.$router.push({name: 'buildingOverview'}))
         }
       }
     },

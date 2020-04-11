@@ -5,7 +5,7 @@
       color="primary"
       dark
     >
-      <div class="d-flex align-center">
+      <div class="d-flex align-center clickable" @click="RouteToSearch" >
         <v-img
           alt="Scouting Roeselare Logo"
           class="shrink mr-2"
@@ -18,14 +18,7 @@
         <h2>Kampenzoeker</h2>
       </div>
 
-      <v-spacer></v-spacer>
 
-      <v-btn @click="RouteToOverview('terrain')">
-        Terreinen
-      </v-btn>
-      <v-btn @click="RouteToOverview('building')">
-        Gebouwen
-      </v-btn>
 
       <v-spacer></v-spacer>
 
@@ -70,7 +63,19 @@ export default {
     RouteToOverview(type){
       this.$store.commit('setType', type)
       this.$router.push({name: type + 'Overview'})
+    },
+    RouteToSearch(){
+      if (this.$route.path != '/')
+        this.$router.push({name: 'search'})
     }
   }
 };
 </script>
+<style>
+  .clickable{
+    cursor: pointer;
+  }
+  .v-content{
+    margin:1%;
+  }
+</style>

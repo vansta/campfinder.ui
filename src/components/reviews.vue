@@ -66,7 +66,6 @@
           cols="12"
           sm="6"
         >
-          Aantal personen
         </v-col>
         <v-col
           key="2"
@@ -107,6 +106,7 @@
               label="Datum"
               readonly
               v-on="on"
+              outlined
               :rules="[rules.required]"
             ></v-text-field>
           </template>
@@ -161,8 +161,8 @@
     },
     data () {
       return {
-        model: this.$route.params.model,
-        reviews:['test','test2','test3'],
+        model: this.$store.state.selectedCampPlace,
+        reviews:[],
         newReview:{},
         rules: {
           required: value => !!value || "Verplicht veld."
@@ -198,9 +198,7 @@
 </script>
 
 <style scoped lang="scss">
-  .reviews {
-    padding: 2%;
-  }
+
   .v-card{
     padding:2%;
   }

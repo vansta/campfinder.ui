@@ -36,8 +36,9 @@ const routes = [
   {path: '/details/building', name:"buildingDetails", component: buildingDetails},
   {path: '/details/terrain', name:"terrainDetails", component: terrainDetails },
   {path: '/new/terrain', name:"newTerrain", component: newTerrain},
-  {path: '/search', name: 'search', component: search},
-  {path: '/reviews', name: 'reviews', component: reviews}
+  //{path: '/search', name: 'search', component: search},
+  {path: '/reviews', name: 'reviews', component: reviews},
+  {path: '', name: 'search', component: search}
 ]
 
 const store = new Vuex.Store({

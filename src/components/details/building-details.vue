@@ -126,9 +126,6 @@
 </script>
 
 <style scoped lang="scss">
-  .building-details {
-    padding: 2%;
-  }
   .v-card{
     padding:2%;
   }

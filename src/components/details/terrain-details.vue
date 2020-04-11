@@ -129,9 +129,6 @@
 </script>
 
 <style scoped lang="scss">
-  .terrain-overview {
-    padding: 2%;
-  }
   .v-card{
     padding:2%;
   }

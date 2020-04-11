@@ -15,7 +15,7 @@
           width="40"
         />
 
-        <h2>Kampenzoeker</h2>
+        <h2 class="d-none d-sm-flex">Kampenzoeker</h2>
       </div>
 
 
@@ -77,5 +77,11 @@ export default {
   }
   .v-content{
     margin:1%;
+  }
+  .hide{
+    display: none;
+  }
+  .header{
+    font-weight: bold;
   }
 </style>

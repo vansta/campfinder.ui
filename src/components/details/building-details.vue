@@ -3,36 +3,44 @@
   <section class="building-details">
     <commonDetails/>
     <v-card>
-    <h2>Gebouw</h2>
-    <v-container>
+    <h2 @click="Hide">Gebouw</h2>
+    <v-container :class="specific">
       <v-row key="1">
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
-          Slaapzalen
+          Aantal slaapzalen
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.dormitories}}
+        </v-col>
+      </v-row>
+      
+      <v-row>
+        <v-col
+          key="1"
+          class="header"
+        >
+          Aantal dagzalen
+        </v-col>
+        <v-col
+          key="2"
+        >
+          {{model.daySpaces}}
         </v-col>
       </v-row>
       <v-row key="2">
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Bos
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           <v-checkbox v-model="model.beds" disabled/>
         </v-col>
@@ -40,15 +48,12 @@
       <v-row>
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Keuken materiaal aanwezig
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           <v-checkbox v-model="model.kitchenGear" disabled/>
           
@@ -57,33 +62,14 @@
       <v-row>
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Bedden
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           <v-checkbox v-model="model.beds" disabled/>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-          key="1"
-          cols="12"
-          sm="6"
-        >
-          Aantal dagzalen
-        </v-col>
-        <v-col
-          key="2"
-          cols="12"
-          sm="6"
-        >
-          {{model.daySpaces}}
         </v-col>
       </v-row>
     </v-container>
@@ -108,11 +94,19 @@
     },
     data () {
       return {
-        model: this.$store.state.selectedCampPlace
+        model: this.$store.state.selectedCampPlace,
+        specific: ''
       }
     },
     methods: {
-
+      Hide(){
+        if (this.specific == ''){
+          this.specific = 'hide'
+        }
+        else{
+          this.specific = ''
+        }
+      }
     },
     computed: {
 
@@ -131,5 +125,8 @@
   }
   .container{
     padding: 1%;
+  }
+  .hide{
+    display: none;
   }
 </style>

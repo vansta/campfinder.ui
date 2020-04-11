@@ -9,15 +9,11 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
         >
           Naam
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.name}}
         </v-col>
@@ -27,15 +23,11 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
         >
           Website
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.website}}
         </v-col>
@@ -45,15 +37,11 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
         >
           Aantal personen
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.amountPersons}}
         </v-col>
@@ -63,14 +51,10 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
         >
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           <v-btn type="submit" class="fullwidth" @click="enableNew = !enableNew">Nieuwe review</v-btn>
         </v-col>

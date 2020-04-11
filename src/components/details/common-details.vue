@@ -2,22 +2,19 @@
 
   <section class="common-details">
     <v-card>
-      <h2>Algemeen</h2>
-    <v-container>
+      <h2 @click="Hide('general')">Algemeen</h2>
+    <v-container :class="general">
       <v-row
       key="1"
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Naam
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.name}}
         </v-col>
@@ -27,15 +24,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Website
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           <a :href="model.website">{{model.website}}</a>
         </v-col>
@@ -45,15 +39,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Aantal personen
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.amountPersons}}
         </v-col>
@@ -63,17 +54,14 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Score
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
-          <v-rating readonly v-model="model.averageScore"/>
+          <v-rating readonly v-model="model.averageScore" half-increments/>
         </v-col>
       </v-row>
        <v-row
@@ -87,22 +75,19 @@
     </v-container>
     </v-card>
     <v-card>
-      <h2>Plaats</h2>
-    <v-container>
+      <h2 @click="Hide('place')">Plaats</h2>
+    <v-container  :class="place">
       <v-row
       key="1"
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Straat
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.place.street}}
         </v-col>
@@ -112,15 +97,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Huisnummer
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.place.houseNumber}}
         </v-col>
@@ -130,15 +112,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Stad
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.place.city}}
         </v-col>
@@ -148,15 +127,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Postcode
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.place.postNumber}}
         </v-col>
@@ -166,15 +142,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Provincie
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.place.province}}
         </v-col>
@@ -184,15 +157,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Country
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.place.country}}
         </v-col>
@@ -201,22 +171,19 @@
     </v-card>
 
     <v-card>
-      <h2>Verhuurder</h2>
-    <v-container>
+      <h2 @click="Hide('person')">Verhuurder</h2>
+    <v-container :class="person">
       <v-row
       key="1"
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Voornaam
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.person.firstName}}
         </v-col>
@@ -226,15 +193,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Familienaam
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.person.lastName}}
         </v-col>
@@ -244,15 +208,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Email
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.person.mailAdress}}
         </v-col>
@@ -262,15 +223,12 @@
       >
         <v-col
           key="1"
-          cols="12"
-          sm="6"
+          class="header"
         >
           Telefoon
         </v-col>
         <v-col
           key="2"
-          cols="12"
-          sm="6"
         >
           {{model.person.telephoneNumber}}
         </v-col>
@@ -293,9 +251,9 @@
     data () {
       return {
         model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
-        general: true,
-        place: true,
-        person: true,
+        general: '',
+        place: '',
+        person: '',
 
       }
     },
@@ -310,6 +268,36 @@
           this.model.new = true;
           this.$router.push({name:'reviews', params: {model: this.model}});
         }
+      },
+      Hide(type){
+        switch (type) {
+          case 'general':
+            if (this.general == ''){
+              this.general = 'hide';
+            }
+            else{
+              this.general = ''
+            }
+            break;
+          case 'person':
+            if (this.person == ''){
+              this.person = 'hide';
+            }
+            else{
+              this.person = ''
+            }
+            break;
+          case 'place':
+            if (this.place == ''){
+              this.place = 'hide';
+            }
+            else{
+              this.place = ''
+            }
+            break;
+          default:
+            break;
+        }
       }
     },
     computed: {
@@ -321,9 +309,6 @@
 </script>
 
 <style scoped lang="scss">
-  .common-details {
-
-  }
   .v-card{
     padding:2%;
   }

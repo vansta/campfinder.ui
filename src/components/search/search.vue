@@ -12,13 +12,14 @@
     </v-card>
     <v-card class="searchSpecific">
       <v-btn link @click="type = 'terrain', PostSearch" :color="GetColor('terrain')" :depressed="this.type != 'terrain'">
-        Terreinen
+        Terrein
       </v-btn>
       <v-btn @click="type = 'building', PostSearch" :color="GetColor('building')" :depressed="this.type != 'building'">
-        Gebouwen
+        Gebouw
       </v-btn>
       <searchBuilding v-if="this.type == 'building'"/>
       <searchTerrain v-if="this.type == 'terrain'"/>
+      <v-rating v-model="$store.state.searchModel.minimumScore" half-increments></v-rating>
     </v-card>
     
     </div>

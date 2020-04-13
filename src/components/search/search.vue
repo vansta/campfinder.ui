@@ -12,8 +12,9 @@
             <v-switch v-model="$store.state.searchModel.foreign" label='Buitenland'/>
           </v-col>
           <v-col>
-            <v-btn  @click="listType = 'list'" :color="GetListTypeColor('list')" :depressed="this.listType != 'list'">Lijst</v-btn>
-            <v-btn  @click="listType = 'fiche'" :color="GetListTypeColor('fiche')" :depressed="this.listType != 'fiche'">Fiches</v-btn>
+            <!-- <v-btn  @click="listType = 'list'" :color="GetListTypeColor('list')" :depressed="this.listType != 'list'">Lijst</v-btn>
+            <v-btn  @click="listType = 'fiche'" :color="GetListTypeColor('fiche')" :depressed="this.listType != 'fiche'">Fiches</v-btn> -->
+            <v-btn @click="items = favorites">Favorieten</v-btn>
           </v-col>
         </v-row>
         
@@ -28,102 +29,35 @@
       </v-btn>
       <searchBuilding v-if="this.type == 'building'"/>
       <searchTerrain v-if="this.type == 'terrain'"/>
+      <v-rating v-model="$store.state.searchModel.minimumScore" half-increments/>
     </v-card>
     
     </div>
     <h1>Overzicht {{title}}</h1>
     <v-btn block @click="PostSearch" color="primary" :loading="loading">Zoeken</v-btn>
-    
-    <v-item-group v-if="listType == 'fiche'">
-      <v-row>
-        <v-col
-          v-for="(item, i) in items"
-          :key=i
-        >
-        <v-card
-      :loading="loading"
-      class="mx-auto my-12"
-      max-width="374"
-      horizontal
-      min-width="300"
-    >
-      <!-- <v-img
-        height="250"
-        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-      ></v-img> -->
-  
-      <v-card-title>{{item.name}}</v-card-title>
-  
-      <v-card-text>
-        <v-row
-          align="center"
-          class="mx-0"
-        >
-          <v-rating
-            :value="item.averageScore"
-            color="amber"
-            dense
-            half-increments
-            readonly
-            size="14"
-          ></v-rating>
-  
-          <div class="grey--text ml-4">{{item.averageScore}}</div>
-        </v-row>
-
-        <div class="my-4 subtitle-1">
-          <a :href="item.website">{{item.website}}</a>
-        </div>
-  
-        <div class="my-4 subtitle-1">
-          {{item.amountPersons}} personen
-        </div>
-  
-        <div>{{item.city}}</div>
-      </v-card-text>
-  
-      <v-divider class="mx-4"></v-divider>
-  
-      <v-card-title v-if="type == 'building'">Gebouw</v-card-title>
-      <v-card-title v-if="type == 'terrain'">Terrein</v-card-title>
-
-      <v-card-text v-if="type == 'building'">
-        <div class="my-4 subtitle-1">
-          {{item.dormitories}} slaapzalen
-        </div>
-        <div class="my-4 subtitle-1" v-if="item.beds">
-          Bedden aanwezig
-        </div>
-      </v-card-text>
-
-      <v-card-text v-if="type == 'terrain'">
-        <div class="my-4 subtitle-1" v-if="item.toilets">
-          Toiletten aanwezig
-        </div>
-      </v-card-text>
-  
-      <v-card-actions>
-        <v-btn
-          color="deep-purple lighten-2"
-          text
-          @click="RowClicked(item)"
-        >
-          Details
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-        </v-col>
-      </v-row>
-    </v-item-group>
     <v-data-table
       v-if="listType == 'list'"
       :headers="headers"
       :items="items"
       @click:row="RowClicked"
     >
-    <!-- <template v-slot:item.averageScore="{ item }">
-           <span><v-rating v-model="item.averageScore"></v-rating></span>
-         </template> -->
+    <template v-slot:item="row">
+          <tr @click="RowClicked(row.item)">
+            <td>{{row.item.name}}</td>
+            <td>{{row.item.amountPersons}}</td>
+            <td>{{row.item.city}}</td>
+            <td>{{row.item.website}}</td>
+            <td>
+              <v-rating v-model="row.item.averageScore" dense small readonly half-increments/>
+            </td>
+            <td>
+                <v-btn icon color="pink" @click.stop="NewFavorite(row.item)">
+                    <v-icon v-if="IsFavorite(row.item.id)">favorite</v-icon>
+                    <v-icon v-else>favorite_border</v-icon>
+                </v-btn>
+            </td>
+          </tr>
+      </template>
     </v-data-table>
   </section>
 
@@ -140,7 +74,9 @@
     mounted () {
       this.GetHeaders(),
       this.PostSearch(),
-      this.InitLocalStorage()
+      this.Title(),
+      this.InitLocalStorage(),
+      this.GetFavorites()
     },
     data () {
       return {
@@ -152,7 +88,8 @@
         items: this.$store.state.items,
         title: this.Title(),
         loading: false,
-        listType: localStorage.listType
+        listType: localStorage.listType,
+        favorites: []
       }
     },
     methods: {
@@ -169,39 +106,26 @@
         if(this.type == 'building'){
             this.$http.PostBuildingSearch(this.$store.state.searchModel)
               .then(resp => this.items = resp.data)
-              .then(() => this.loading = false)
+              .then(() => this.loading = false);
         }
         else{
               this.$http.PostTerrainSearch(this.$store.state.searchModel)
                 .then(resp => this.items = resp.data)
-                .then(() => this.loading = false)
+                .then(() => this.loading = false);
         }
       },
       GetHeaders(){
-        if(this.type == 'building'){
-            this.headers = [
-              {text:"Naam", value:"name"},
-              {text:"Slaapzalen", value:"dormitories"},
+        this.headers = [
+              {text:"Naam", value:"name"},              
               {text:"Aantal personen", value:"amountPersons"},
               {text:"Stad", value:"city"},
-              {text:"Website", value:"website"}
+              {text:"Website", value:"website"},
+              {text:"Score", value:  "averageScore"},
+              {text:"Favoriet"}
             ]
-        }
-        else{
-              this.headers = [
-                {text:"Naam", value:"name"},
-                {text:"Oppervlakte", value:"area"},
-                {text:"Aantal personen", value:"amountPersons"},
-                {text:"Stad", value:"city"},
-                {text:"Website", value:"website"},
-                {text:"Water", value:"water"},
-                {text:"Score", value:"averageScore", dataType:'rating'}
-              ]
-            
-        }
       },
       RowClicked(selectedRow){
-        if (this.type == 'building'){
+        if (selectedRow.type == 'building'){          
           this.$http.GetBuildingDetails(selectedRow.id)
           .then(resp => this.$store.commit('SetCampPlace', resp.data))
           .then(() => this.$router.push({name: 'buildingDetails'}))
@@ -248,10 +172,43 @@
       },
       InitLocalStorage(){
         if (localStorage.type == null){
-          localStorage.type = 'building'
+          localStorage.type = 'building';
+          this.type = 'building';
         }
         if(localStorage.listType == null){
-          localStorage.listType = 'list'
+          localStorage.listType = 'list';
+          this.listType = 'list';
+        }
+      },
+      NewFavorite(item){
+        if (!this.IsFavorite(item.id)){
+          this.favorites.push(item);
+        }
+        else{
+          this.RemoveFavorite(item.id);
+        }
+        this.saveFavorites();
+      },
+      saveFavorites(){
+        const parsed = JSON.stringify(this.favorites);
+        localStorage.favorites = parsed;
+      },
+      IsFavorite(id){
+        for (var i = 0; i < this.favorites.length; i++){
+          if (this.favorites[i].id == id){
+            return true;
+          }
+        }
+        return false;
+      },
+      GetFavorites(){
+        this.favorites = JSON.parse(localStorage.favorites)
+      },
+      RemoveFavorite(id){
+        for (var i = 0; i < this.favorites.length; i++){
+          if (this.favorites[i].id == id){
+            this.favorites.splice(i, 1);
+          }
         }
       }
     },

@@ -295,20 +295,19 @@
         model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
         general: true,
         place: true,
-        person: true,
+        person: true
 
       }
     },
     methods: {
       RouteToReviews(){
         if(this.$route.path != '/reviews'){
-          this.$router.push({name:'reviews', params: {model: this.model}});
+          this.$router.push({name:'reviews', params: {enableNew: false}});
         }
       },
       RouteToNewReview(){
         if(this.$route.path != '/reviews'){
-          this.model.new = true;
-          this.$router.push({name:'reviews', params: {model: this.model}});
+          this.$router.push({name:'reviews', params: {enableNew: true}});
         }
       }
     },

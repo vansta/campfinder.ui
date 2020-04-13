@@ -139,19 +139,20 @@
     props: [],
     mounted () {
       this.GetHeaders(),
-      this.PostSearch()
+      this.PostSearch(),
+      this.InitLocalStorage()
     },
     data () {
       return {
         searchModel: {},
         provinces: ["West-Vlaanderen", "Oost-Vlaanderen", "Antwerpen", "Limburg", "Vlaams-Brabant", "Henegouwen", "Waals-Brabant", "Luik", "Luxemburg", "Namen"],
-        type: 'building',
+        type: localStorage.type,
         hide: '',
         headers: [], 
         items: this.$store.state.items,
         title: this.Title(),
         loading: false,
-        listType: 'fiche'
+        listType: localStorage.listType
       }
     },
     methods: {
@@ -234,6 +235,24 @@
         else{
           return 'indigo lighten-5'
         }
+      },
+      SetLocalStorage(type, value){
+        switch(type){
+          case 'type':
+            localStorage.type = value;
+            break;
+          case 'listType':
+            localStorage.listType = value;
+            break;
+        }
+      },
+      InitLocalStorage(){
+        if (localStorage.type == null){
+          localStorage.type = 'building'
+        }
+        if(localStorage.listType == null){
+          localStorage.listType = 'list'
+        }
       }
     },
     computed: {
@@ -248,6 +267,10 @@
         this.GetHeaders(),
         this.PostSearch(),
         this.Title()
+        this.SetLocalStorage('type', this.type)
+      },
+      listType: function (){
+        this.SetLocalStorage('listType', this.listType)
       }
     }
 }

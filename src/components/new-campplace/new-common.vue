@@ -58,7 +58,6 @@
         <v-switch v-model="model.Beds" label="Bedden" outlined/>
       </v-form>
     </v-card>
-    <v-btn block color="primary" @click="SendNewCampPlace" :disabled="!IsValid()">Verzenden</v-btn>
     <v-btn block color="primary" @click="SendNewCampPlace" :disabled="!valid">Verzenden</v-btn>
   </section>
 

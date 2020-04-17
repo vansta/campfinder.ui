@@ -29,6 +29,11 @@
         <v-text-field v-model="model.Place.City" label="Stad" :rules="[rules.required]" outlined/>
         <v-combobox v-model="model.Place.Province" label="Province" :rules="[rules.required]" outlined :items="provinces"/>
         <v-combobox v-model="model.Place.Country" label="Land" :rules="[rules.required]" outlined :items="countries"/>
+        <v-slider v-model="model.Place.Accessibility" label="Bereikbaarheid in uren" thumb-label max="12" ticks step="0.5">
+          <template v-slot:prepend>
+          </template>
+        </v-slider>
+        <v-textarea v-model="model.Place.AccessibilityNote" label="Opmerking" outlined/>
       </v-form>
     </v-card>
     <v-form>

@@ -197,6 +197,42 @@
           {{model.place.country}}
         </v-col>
       </v-row>
+      <v-row
+      key="7"
+      >
+        <v-col
+          key="1"
+          cols="12"
+          sm="6"
+        >
+          Bereikbaarheid in uren
+        </v-col>
+        <v-col
+          key="2"
+          cols="12"
+          sm="6"
+        >
+          {{model.place.accessibility}}h
+        </v-col>
+      </v-row>
+      <v-row
+      key="8"
+      >
+        <v-col
+          key="1"
+          cols="12"
+          sm="6"
+        >
+          Opmerking
+        </v-col>
+        <v-col
+          key="2"
+          cols="12"
+          sm="6"
+        >
+          {{model.place.accessibilityNote}}
+        </v-col>
+      </v-row>
     </v-container>
     </v-card>
 

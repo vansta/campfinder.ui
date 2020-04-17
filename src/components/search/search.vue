@@ -29,7 +29,10 @@
       </v-btn>
       <searchBuilding v-if="this.type == 'building'"/>
       <searchTerrain v-if="this.type == 'terrain'"/>
-      <v-rating v-model="$store.state.searchModel.minimumScore" half-increments/>
+      <v-form>
+        <v-rating v-model="$store.state.searchModel.minimumScore" half-increments clearable label="Minimum score"/>
+        <v-slider v-model="$store.state.searchModel.accessibility" label="Bereikbaarheid in uren" thumb-label max="12" dense ticks step="0.5"/>
+      </v-form>
     </v-card>
     
     </div>

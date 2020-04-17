@@ -167,6 +167,42 @@
           {{model.place.country}}
         </v-col>
       </v-row>
+      <v-row
+      key="7"
+      >
+        <v-col
+          key="1"
+          cols="12"
+          sm="6"
+        >
+          Bereikbaarheid in uren
+        </v-col>
+        <v-col
+          key="2"
+          cols="12"
+          sm="6"
+        >
+          {{model.place.accessibility}}h
+        </v-col>
+      </v-row>
+      <v-row
+      key="8"
+      >
+        <v-col
+          key="1"
+          cols="12"
+          sm="6"
+        >
+          Opmerking
+        </v-col>
+        <v-col
+          key="2"
+          cols="12"
+          sm="6"
+        >
+          {{model.place.accessibilityNote}}
+        </v-col>
+      </v-row>
     </v-container>
     </v-card>
 
@@ -251,22 +287,21 @@
     data () {
       return {
         model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
-        general: '',
-        place: '',
-        person: '',
+        general: false,
+        place: false,
+        person: false
 
       }
     },
     methods: {
       RouteToReviews(){
         if(this.$route.path != '/reviews'){
-          this.$router.push({name:'reviews', params: {model: this.model}});
+          this.$router.push({name:'reviews', params: {enableNew: false}});
         }
       },
       RouteToNewReview(){
         if(this.$route.path != '/reviews'){
-          this.model.new = true;
-          this.$router.push({name:'reviews', params: {model: this.model}});
+          this.$router.push({name:'reviews', params: {enableNew: true}});
         }
       },
       Hide(type){

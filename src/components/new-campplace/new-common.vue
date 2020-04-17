@@ -29,6 +29,11 @@
         <v-text-field v-model="model.Place.City" label="Stad" :rules="[rules.required]" outlined/>
         <v-combobox v-model="model.Place.Province" label="Province" :rules="[rules.required]" outlined :items="provinces"/>
         <v-combobox v-model="model.Place.Country" label="Land" :rules="[rules.required]" outlined :items="countries"/>
+        <v-slider v-model="model.Place.Accessibility" label="Bereikbaarheid in uren" thumb-label max="12" ticks step="0.5">
+          <template v-slot:prepend>
+          </template>
+        </v-slider>
+        <v-textarea v-model="model.Place.AccessibilityNote" label="Opmerking" outlined/>
       </v-form>
     </v-card>
     <v-form>
@@ -38,7 +43,7 @@
 
     <v-card class="form" v-if="type == 'terrain'">
       <h2>Terrein</h2>
-      <v-form lazy-validation>
+      <v-form v-model="valid">
         <v-switch v-model="model.Water" label="Water"/>
         <v-switch v-model="model.Electricity" label="Electriciteit"/>
         <v-switch v-model="model.Toilets" label="Toiletten"/>
@@ -46,7 +51,7 @@
     </v-card>
     <v-card class="form" v-if="type == 'building'">
       <h2>Gebouw</h2>
-      <v-form lazy-validation>
+      <v-form v-model="valid">
         <v-text-field v-model="model.Dormitories" :rules="[rules.required, rules.int]" label="Aantal slaapzalen" outlined/>
         <v-text-field v-model="model.DaySpaces" :rules="[rules.required, rules.int]" label="Aantal dagzalen" outlined/>
         <v-switch v-model="model.KitchenGear" label="Keukenmateriaal aanwezig" outlined/>
@@ -54,6 +59,7 @@
       </v-form>
     </v-card>
     <v-btn block color="primary" @click="SendNewCampPlace" :disabled="!IsValid()">Verzenden</v-btn>
+    <v-btn block color="primary" @click="SendNewCampPlace" :disabled="!valid">Verzenden</v-btn>
   </section>
 
 </template>

@@ -62,7 +62,7 @@
     </v-container>
     </v-card>
     <v-card v-if="enableNew">
-      <v-form v-model="valid" lazy-validation>
+      <v-form v-model="valid">
         <v-textarea v-model="newReview.note" label="Opmerking" outlined/>
           <v-row key="1">
         <v-col
@@ -152,7 +152,7 @@
           required: value => !!value || "Verplicht veld."
         },
         valid: false,
-        enableNew: false,
+        enableNew: this.$route.params.enableNew,
         menu: false,
         loading: false
       }

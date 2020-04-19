@@ -3,7 +3,7 @@
   <section class="new-common">
     <v-card class="form">
       <h2>Algemeen</h2>
-      <v-form v-model="valid">
+      <v-form v-model="generalValid">
         <v-text-field v-model="model.Name" label="Naam" :rules="[rules.required]" outlined/>
         <v-text-field v-model="model.Website" label="Website" outlined/>
         <v-text-field v-model="model.AmountPersons" label="Aantal personen" :rules="[rules.required, rules.int]" outlined/>
@@ -13,7 +13,7 @@
     </v-card>
     <v-card class="form">
       <h2>Verhuurder</h2>
-      <v-form v-model="valid">
+      <v-form v-model="personValid">
         <v-text-field v-model="model.Person.FirstName" label="Voornaam" outlined/>
         <v-text-field v-model="model.Person.LastName" label="Familienaam" outlined/>
         <v-text-field v-model="model.Person.MailAdress" label="Email" outlined/>
@@ -22,7 +22,7 @@
     </v-card>
     <v-card class="form">
       <h2>Plaats</h2>
-      <v-form v-model="valid">
+      <v-form v-model="placeValid">
         <v-text-field v-model="model.Place.Street" label="Straat" :rules="[rules.required]" outlined/>
         <v-text-field v-model="model.Place.HouseNumber" label="Nummer" outlined/>
         <v-text-field v-model="model.Place.PostNumber" label="Postcode" outlined/>
@@ -73,10 +73,7 @@
     },
     data () {
       return {
-        model:{
-          Person:{},
-          Place:{}
-        },
+        model: this.$store.state.newCampPlace,
         type: 'building',
         provinces: ["West-Vlaanderen", "Oost-Vlaanderen", "Antwerpen", "Limburg", "Vlaams-Brabant", "Henegouwen", "Waals-Brabant", "Luik", "Luxemburg", "Namen"],
         countries: ["België", "Nederland", "Frankrijk", "Duitsland"],
@@ -102,11 +99,11 @@
         if (this.IsValid()){
           if (this.type == 'terrain'){
             this.$http.PostNewTerrain(this.model)
-              .then(() => this.$router.push({name: 'terrainOverview'}))
+              .then(() => this.ClearAndToHome())
           }
           else{
             this.$http.PostNewBuilding(this.model)
-              .then(() => this.$router.push({name: 'buildingOverview'}))
+              .then(() => this.ClearAndToHome())
           }
         }
       },
@@ -119,7 +116,11 @@
         }
       },
       IsValid(){
-        return (this.generalValid && this.personValid && this.placeValid && this.type != '');
+        return (this.generalValid && this.personValid && this.placeValid);
+      },
+      ClearAndToHome(){
+        this.$store.commit('ClearNewCampPlace');
+        this.$router.push({name:'search'});
       }
     },
     computed: {

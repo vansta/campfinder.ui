@@ -287,9 +287,9 @@
     data () {
       return {
         model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
-        general: false,
-        place: false,
-        person: false
+        general: '',
+        place: '',
+        person: ''
 
       }
     },

@@ -41,7 +41,11 @@ const store = new Vuex.Store({
   state:{
     searchModel:{},
     type: '',
-    selectedCampPlace: {}
+    selectedCampPlace: {},
+    newCampPlace:{
+      Place:{},
+      Person:{}
+    }
   },
   mutations:{
     setType(state, type){
@@ -52,6 +56,9 @@ const store = new Vuex.Store({
     },
     SetCampPlace(state, campPlace){
         state.selectedCampPlace = campPlace;
+    },
+    ClearNewCampPlace(state){
+      state.newCampPlace = {Place:{},Person:{}}
     }
   }
 })

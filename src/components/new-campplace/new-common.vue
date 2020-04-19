@@ -3,7 +3,7 @@
   <section class="new-common">
     <v-card class="form">
       <h2>Algemeen</h2>
-      <v-form v-model="generalValid">
+      <v-form v-model="generalValid" ref="generalForm">
         <v-text-field v-model="model.Name" label="Naam" :rules="[rules.required]" outlined/>
         <v-text-field v-model="model.Website" label="Website" outlined/>
         <v-text-field v-model="model.AmountPersons" label="Aantal personen" :rules="[rules.required, rules.int]" outlined/>
@@ -13,7 +13,7 @@
     </v-card>
     <v-card class="form">
       <h2>Verhuurder</h2>
-      <v-form v-model="personValid">
+      <v-form v-model="personValid" ref="personForm">
         <v-text-field v-model="model.Person.FirstName" label="Voornaam" outlined/>
         <v-text-field v-model="model.Person.LastName" label="Familienaam" outlined/>
         <v-text-field v-model="model.Person.MailAdress" label="Email" outlined/>
@@ -22,7 +22,7 @@
     </v-card>
     <v-card class="form">
       <h2>Plaats</h2>
-      <v-form v-model="placeValid">
+      <v-form v-model="placeValid" ref="placeForm">
         <v-text-field v-model="model.Place.Street" label="Straat" :rules="[rules.required]" outlined/>
         <v-text-field v-model="model.Place.HouseNumber" label="Nummer" outlined/>
         <v-text-field v-model="model.Place.PostNumber" label="Postcode" outlined/>
@@ -43,7 +43,7 @@
 
     <v-card class="form" v-if="type == 'terrain'">
       <h2>Terrein</h2>
-      <v-form v-model="valid">
+      <v-form v-model="valid" ref="form">
         <v-switch v-model="model.Water" label="Water"/>
         <v-switch v-model="model.Electricity" label="Electriciteit"/>
         <v-switch v-model="model.Toilets" label="Toiletten"/>
@@ -51,14 +51,14 @@
     </v-card>
     <v-card class="form" v-if="type == 'building'">
       <h2>Gebouw</h2>
-      <v-form v-model="valid">
+      <v-form v-model="valid" ref="form">
         <v-text-field v-model="model.Dormitories" :rules="[rules.required, rules.int]" label="Aantal slaapzalen" outlined/>
         <v-text-field v-model="model.DaySpaces" :rules="[rules.required, rules.int]" label="Aantal dagzalen" outlined/>
         <v-switch v-model="model.KitchenGear" label="Keukenmateriaal aanwezig" outlined/>
         <v-switch v-model="model.Beds" label="Bedden" outlined/>
       </v-form>
     </v-card>
-    <v-btn block color="primary" @click="SendNewCampPlace" :disabled="!valid">Verzenden</v-btn>
+    <v-btn block color="primary" @click="SendNewCampPlace">Verzenden</v-btn>
   </section>
 
 </template>
@@ -88,14 +88,15 @@
             return pattern.test(value) || "Waarde moet een getal zijn."
           }
         },
-        valid: false,
-        generalValid: false,
-        personValid: false,
-        placeValid: false
+        valid: true,
+        generalValid: true,
+        personValid: true,
+        placeValid: true
       }
     },
     methods: {
       SendNewCampPlace(){
+        this.Validate();
         if (this.IsValid()){
           if (this.type == 'terrain'){
             this.$http.PostNewTerrain(this.model)
@@ -116,11 +117,17 @@
         }
       },
       IsValid(){
-        return (this.generalValid && this.personValid && this.placeValid);
+        return (this.generalValid && this.personValid && this.placeValid && this.valid);
       },
       ClearAndToHome(){
         this.$store.commit('ClearNewCampPlace');
         this.$router.push({name:'search'});
+      },
+      Validate(){
+        this.$refs.form.validate();
+        this.$refs.generalForm.validate();
+        this.$refs.personForm.validate();
+        this.$refs.placeForm.validate();
       }
     },
     computed: {

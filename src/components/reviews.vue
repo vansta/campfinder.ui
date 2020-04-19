@@ -70,7 +70,7 @@
           cols="12"
           sm="4"
         >
-          <v-rating v-model="newReview.score" label="Score"/>
+          <v-rating v-model="newReview.score" half-increments label="Score"/>
         </v-col>
         <v-col
           key="2"

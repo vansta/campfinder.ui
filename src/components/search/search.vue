@@ -4,8 +4,8 @@
     <div :class="hide">
     <v-card class="searchGeneral">
       <v-form>
-        <v-text-field v-model="$store.state.searchModel.name"  label="Naam" outlined/>
-        <v-text-field v-model="$store.state.searchModel.amountPersons"  label="Aantal personen" outlined/>
+        <v-text-field v-model="$store.state.searchModel.name" clearable  label="Naam" outlined/>
+        <v-text-field v-model="$store.state.searchModel.amountPersons" clearable  label="Aantal personen" outlined/>
         <v-combobox :items="provinces" v-model="$store.state.searchModel.province" multiple clearable chips label="provincie" outlined/>
         <v-row>
           <v-col>
@@ -14,7 +14,11 @@
           <v-col>
             <!-- <v-btn  @click="listType = 'list'" :color="GetListTypeColor('list')" :depressed="this.listType != 'list'">Lijst</v-btn>
             <v-btn  @click="listType = 'fiche'" :color="GetListTypeColor('fiche')" :depressed="this.listType != 'fiche'">Fiches</v-btn> -->
-            <v-btn @click="items = favorites">Favorieten</v-btn>
+            <v-btn id="favorites" @click="items = favorites" bottom type="toggle">
+              Favorieten
+              <v-spacer></v-spacer>
+              <v-icon  color="pink">favorite</v-icon>              
+            </v-btn>
           </v-col>
         </v-row>
         
@@ -259,5 +263,8 @@
   
   h1{
     clear: both;
+  }
+  #favorites{
+    width: 80%;
   }
 </style>

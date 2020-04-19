@@ -84,7 +84,7 @@
           },
           required: value => !!value || "Verplicht veld.",
           double: value => {
-            const pattern = /(^(\d+)(,\d+|\.\d+)?|(^)|NULL)$/
+            const pattern = /(^(\d+)(,\d+|\.\d+)?|(^)|undefined)$/
             return pattern.test(value) || "Waarde moet een getal zijn."
           }
         },

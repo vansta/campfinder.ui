@@ -29,7 +29,7 @@
         <v-col
           key="2"
         >
-          <v-checkbox v-model="model.forest" disabled/>
+          <v-checkbox v-model="model.forest" readonly/>
         </v-col>
       </v-row>
       <v-row>
@@ -42,7 +42,7 @@
         <v-col
           key="2"
         >
-          <v-checkbox v-model="model.water" disabled/>
+          <v-checkbox v-model="model.water" readonly/>
           
         </v-col>
       </v-row>
@@ -56,7 +56,7 @@
         <v-col
           key="2"
         >
-          <v-checkbox v-model="model.electricity" disabled/>
+          <v-checkbox v-model="model.electricity" readonly/>
         </v-col>
       </v-row>
       <v-row>
@@ -69,9 +69,10 @@
         <v-col
           key="2"
         >
-          <v-checkbox v-model="model.toilets" disabled/>
+          <v-checkbox v-model="model.toilets" readonly/>
         </v-col>
       </v-row>
+      <v-btn color="primary" @click="Update" absolute bottom right>Update</v-btn>
     </v-container>
     </v-card>
   </section>
@@ -108,6 +109,10 @@
         else{
           this.specific = ''
         }
+      },
+      Update(){
+        this.$store.commit('SetNewCampPlace', this.model);
+        this.$router.push({name: 'new', params: { type: 'terrain'} });
       }
     },
     computed: {

@@ -159,7 +159,7 @@
           key="1"
           class="header"
         >
-          Country
+          Land
         </v-col>
         <v-col
           key="2"
@@ -174,6 +174,7 @@
           key="1"
           cols="12"
           sm="6"
+          class="header"
         >
           Bereikbaarheid in uren
         </v-col>
@@ -192,6 +193,7 @@
           key="1"
           cols="12"
           sm="6"
+          class="header"
         >
           Opmerking
         </v-col>
@@ -349,5 +351,8 @@
   }
   .container{
     padding: 1%;
+  }
+  #updateBtn{
+    float:left;
   }
 </style>

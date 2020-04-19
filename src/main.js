@@ -13,7 +13,7 @@ Vue.use(Vuex)
 import commonDetails from '../src/components/details/common-details.vue';
 import buildingDetails from '../src/components/details/building-details.vue';
 import terrainDetails from '../src/components/details/terrain-details.vue';
-import newTerrain from '../src/components/new-campplace/new-common.vue';
+import newCampPlace from '../src/components/new-campplace/new-common.vue';
 import search from '../src/components/search/search.vue';
 import reviews from '../src/components/reviews.vue'
 
@@ -31,7 +31,7 @@ const routes = [
   {path: '/details', name:"commonDetails", component: commonDetails},
   {path: '/details/building', name:"buildingDetails", component: buildingDetails},
   {path: '/details/terrain', name:"terrainDetails", component: terrainDetails },
-  {path: '/new/terrain', name:"newTerrain", component: newTerrain},
+  {path: '/new/terrain', name:"new", component: newCampPlace},
   //{path: '/search', name: 'search', component: search},
   {path: '/reviews', name: 'reviews', component: reviews},
   {path: '', name: 'search', component: search}
@@ -43,8 +43,8 @@ const store = new Vuex.Store({
     type: '',
     selectedCampPlace: {},
     newCampPlace:{
-      Place:{},
-      Person:{}
+      place:{},
+      person:{}
     }
   },
   mutations:{
@@ -58,7 +58,10 @@ const store = new Vuex.Store({
         state.selectedCampPlace = campPlace;
     },
     ClearNewCampPlace(state){
-      state.newCampPlace = {Place:{},Person:{}}
+      state.newCampPlace = {place:{},person:{}}
+    },
+    SetNewCampPlace(state, newCampPlace){
+      state.newCampPlace = newCampPlace;
     }
   }
 })

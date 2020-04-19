@@ -42,7 +42,7 @@
         <v-col
           key="2"
         >
-          <v-checkbox v-model="model.beds" disabled/>
+          <v-checkbox v-model="model.forest" readonly/>
         </v-col>
       </v-row>
       <v-row>
@@ -55,7 +55,7 @@
         <v-col
           key="2"
         >
-          <v-checkbox v-model="model.kitchenGear" disabled/>
+          <v-checkbox v-model="model.kitchenGear" readonly/>
           
         </v-col>
       </v-row>
@@ -69,9 +69,10 @@
         <v-col
           key="2"
         >
-          <v-checkbox v-model="model.beds" disabled/>
+          <v-checkbox v-model="model.beds" readonly/>
         </v-col>
       </v-row>
+      <v-btn color="primary" @click="Update" absolute bottom right>Update</v-btn>
     </v-container>
     </v-card>
   </section>
@@ -106,6 +107,10 @@
         else{
           this.specific = ''
         }
+      },
+      Update(){
+        this.$store.commit('SetNewCampPlace', this.model);
+        this.$router.push({name: 'new', params: { type: 'building'} });
       }
     },
     computed: {

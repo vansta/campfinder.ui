@@ -55,5 +55,15 @@ export default{
         return ajax.post(`${settings.baseUrlApi}/reviews`, 
             review
         )
+    },
+
+    //DELETE
+    RemoveBuilding(id){
+        return ajax.delete(`${settings.baseUrlApi}/building/delete`, 
+            {params: {id: id}})
+    },
+    RemoveTerrain(id){
+        return ajax.delete(`${settings.baseUrlApi}/terrain/delete`, 
+            {params: {id: id}})
     }
 }

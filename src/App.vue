@@ -58,7 +58,12 @@ export default {
   }),
   methods:{
     RouteToNewCampPlace(){
-      this.$router.push({name:"newTerrain"})
+      if (this.$route.path != 'new'){
+        if (this.$store.state.newCampPlace.id != undefined){
+          this.$store.commit('ClearNewCampPlace');
+        }
+        this.$router.push({name:"new"})
+      }
     },
     RouteToOverview(type){
       this.$store.commit('setType', type)

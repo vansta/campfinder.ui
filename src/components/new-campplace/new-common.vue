@@ -108,7 +108,7 @@
         if (this.isValid()){
           this.loading = true;
           if (this.type == 'terrain'){
-            this.$http.PostNewTerrain(this.model)
+            this.$http.postNewTerrain(this.model)
               .then(resp => {
                 this.messageType = "success";
                 this.message = resp.data;
@@ -123,7 +123,7 @@
               .finally(() => this.loading = false);
           }
           else{
-            this.$http.PostNewBuilding(this.model)              
+            this.$http.postNewBuilding(this.model)              
               .then(resp => {
                 this.messageType = "success";
                 this.message = resp.data;

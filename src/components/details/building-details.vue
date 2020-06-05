@@ -3,8 +3,8 @@
   <section class="building-details">
     <commonDetails/>
     <v-card>
-    <h2 @click="hide">Gebouw</h2>
-    <v-container :class="specific">
+    <h2 @click="specific = !specific">Gebouw</h2>
+    <v-container v-if="specific">
       <v-row key="1">
         <v-col
           key="1"
@@ -128,7 +128,7 @@
     name: 'building-details',
     props: [],
     mounted () {
-      // this.$http.GetBuildingDetails(this.$route.params.id)
+      // this.$http.getBuildingDetails(this.$route.params.id)
       //   //.then(resp => this.model = resp.data)
       //   .then(resp => this.$store.commit('setCampPlace', resp.data))
       //   .catch(error => alert(error))
@@ -136,27 +136,19 @@
     data () {
       return {
         model: this.$store.state.selectedCampPlace,
-        specific: '',
+        specific: true,
         dialog: false,
         message: "",
         messageType: "success"
       }
     },
     methods: {
-      hide(){
-        if (this.specific == ''){
-          this.specific = 'hide'
-        }
-        else{
-          this.specific = ''
-        }
-      },
       update(){
         this.$store.commit('setNewCampPlace', this.model);
         this.$router.push({name: 'new', params: { type: 'building'} });
       },
       remove(){
-        this.$http.RemoveBuilding(this.model.id)
+        this.$http.removeBuilding(this.model.id)
           .then(resp => {    
             this.dialog = false;   
             this.messageType = "success";

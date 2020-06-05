@@ -2,8 +2,9 @@
 
   <section class="common-details">
     <v-card>
-      <h2 @click="hide('general')">Algemeen</h2>
-    <v-container :class="general">
+      <h2 @click="general = !general">Algemeen</h2>
+    <v-container v-if="general">
+
       <v-row
       key="1"
       >
@@ -75,8 +76,8 @@
     </v-container>
     </v-card>
     <v-card>
-      <h2 @click="hide('place')">Plaats</h2>
-    <v-container  :class="place">
+      <h2 @click="place = !place">Plaats</h2>
+    <v-container  v-if="place">
       <v-row
       key="1"
       >
@@ -209,8 +210,8 @@
     </v-card>
 
     <v-card>
-      <h2 @click="hide('person')">Verhuurder</h2>
-    <v-container :class="person">
+      <h2 @click="person = !person">Verhuurder</h2>
+    <v-container v-if="person">
       <v-row
       key="1"
       >
@@ -289,9 +290,9 @@
     data () {
       return {
         model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
-        general: '',
-        place: '',
-        person: ''
+        general: true,
+        place: true,
+        person: true
 
       }
     },
@@ -304,36 +305,6 @@
       RouteToNewReview(){
         if(this.$route.path != '/reviews'){
           this.$router.push({name:'reviews', params: {enableNew: true}});
-        }
-      },
-      hide(type){
-        switch (type) {
-          case 'general':
-            if (this.general == ''){
-              this.general = 'hide';
-            }
-            else{
-              this.general = ''
-            }
-            break;
-          case 'person':
-            if (this.person == ''){
-              this.person = 'hide';
-            }
-            else{
-              this.person = ''
-            }
-            break;
-          case 'place':
-            if (this.place == ''){
-              this.place = 'hide';
-            }
-            else{
-              this.place = ''
-            }
-            break;
-          default:
-            break;
         }
       }
     },

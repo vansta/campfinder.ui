@@ -11,42 +11,42 @@ const ajax = axios.create({
 
 export default{
     //GET
-    GetTerrainsOverview(){
+    getTerrainsOverview(){
         return ajax.get('terrain/all')
     },
-    GetTerrainDetails(selectedRowId){
+    getTerrainDetails(selectedRowId){
         return ajax.get('terrain',
         {params: {id: selectedRowId}} )
     },
-    GetBuildingsOverview(){
+    getBuildingsOverview(){
         return ajax.get('building/all')
     },
-    GetBuildingDetails(selectedRowId){
+    getBuildingDetails(selectedRowId){
         return ajax.get('building',
         {params: {id: selectedRowId}} )
     },
-    GetReviewsById(id){
+    getReviewsById(id){
         return ajax.get('reviews', 
         {params: {id: id}})
     },
 
     //POST
-    PostNewBuilding(building){
+    postNewBuilding(building){
         return ajax.post('building',
             building
         )
     },
-    PostNewTerrain(terrain){
+    postNewTerrain(terrain){
         return ajax.post('terrain',
             terrain
         )
     },
-    PostTerrainSearch(terrainSearch){
+    postTerrainSearch(terrainSearch){
         return ajax.post('terrain/search',
             terrainSearch
         )
     },
-    PostBuildingSearch(buildingSearch){
+    postBuildingSearch(buildingSearch){
         return ajax.post('building/search',
             buildingSearch
         )
@@ -58,7 +58,7 @@ export default{
     },
 
     //DELETE
-    RemoveBuilding(id){
+    removeBuilding(id){
         return ajax.delete('building/delete', 
             {params: {id: id}})
     },

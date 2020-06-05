@@ -83,9 +83,6 @@ export default {
   .v-content{
     margin:1%;
   }
-  .hide{
-    display: none;
-  }
   .header{
     font-weight: bold;
   }

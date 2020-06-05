@@ -1,7 +1,7 @@
 <template lang="html">
 
   <section >
-    <div :class="hide">
+    <div>
     <v-card class="searchGeneral">
       <v-form>
         <v-text-field v-model="$store.state.searchModel.name" clearable  label="Naam" outlined/>
@@ -12,8 +12,8 @@
             <v-switch v-model="$store.state.searchModel.foreign" label='Buitenland'/>
           </v-col>
           <v-col>
-            <!-- <v-btn  @click="listType = 'list'" :color="GetListTypeColor('list')" :depressed="this.listType != 'list'">Lijst</v-btn>
-            <v-btn  @click="listType = 'fiche'" :color="GetListTypeColor('fiche')" :depressed="this.listType != 'fiche'">Fiches</v-btn> -->
+            <!-- <v-btn  @click="listType = 'list'" :color="getListTypeColor('list')" :depressed="this.listType != 'list'">Lijst</v-btn>
+            <v-btn  @click="listType = 'fiche'" :color="getListTypeColor('fiche')" :depressed="this.listType != 'fiche'">Fiches</v-btn> -->
             <v-btn id="favorites" @click="items = favorites" bottom type="toggle">
               Favorieten
               <v-spacer></v-spacer>
@@ -25,10 +25,10 @@
       </v-form>
     </v-card>
     <v-card class="searchSpecific">
-      <v-btn link @click="type = 'terrain', PostSearch" :color="GetColor('terrain')" :depressed="this.type != 'terrain'">
+      <v-btn link @click="type = 'terrain', postSearch" :color="getColor('terrain')" :depressed="this.type != 'terrain'">
         Terrein
       </v-btn>
-      <v-btn @click="type = 'building', PostSearch" :color="GetColor('building')" :depressed="this.type != 'building'">
+      <v-btn @click="type = 'building', postSearch" :color="getColor('building')" :depressed="this.type != 'building'">
         Gebouw
       </v-btn>
       <searchBuilding v-if="this.type == 'building'"/>
@@ -42,15 +42,15 @@
     </div>
     <h1>Overzicht {{title}}</h1>
     <v-alert :type="messageType" v-if="message != ''">{{message}}</v-alert>
-    <v-btn block @click="PostSearch" color="primary" :loading="loading">Zoeken</v-btn>
+    <v-btn block @click="postSearch" color="primary" :loading="loading">Zoeken</v-btn>
     <v-data-table
       v-if="listType == 'list'"
       :headers="headers"
       :items="items"
-      @click:row="RowClicked"
+      @click:row="rowClicked"
     >
     <template v-slot:item="row">
-          <tr @click="RowClicked(row.item)">
+          <tr @click="rowClicked(row.item)">
             <td>{{row.item.name}}</td>
             <td>{{row.item.amountPersons}}</td>
             <td>{{row.item.city}}</td>
@@ -59,8 +59,8 @@
               <v-rating v-model="row.item.averageScore" dense small readonly half-increments/>
             </td>
             <td>
-                <v-btn icon color="pink" @click.stop="NewFavorite(row.item)">
-                    <v-icon v-if="IsFavorite(row.item.id)">favorite</v-icon>
+                <v-btn icon color="pink" @click.stop="newFavorite(row.item)">
+                    <v-icon v-if="isFavorite(row.item.id)">favorite</v-icon>
                     <v-icon v-else>favorite_border</v-icon>
                 </v-btn>
             </td>
@@ -80,39 +80,32 @@
     name: 'search',
     props: [],
     mounted () {
-      this.GetHeaders(),
-      this.PostSearch(),
-      this.Title(),
-      this.InitLocalStorage(),
-      this.GetFavorites()
+      this.getHeaders(),
+      this.postSearch(),
+      this.getTitle(),
+      this.initLocalStorage(),
+      this.getFavorites()
     },
     data () {
       return {
         searchModel: {},
         provinces: ["West-Vlaanderen", "Oost-Vlaanderen", "Antwerpen", "Limburg", "Vlaams-Brabant", "Henegouwen", "Waals-Brabant", "Luik", "Luxemburg", "Namen"],
-        type: localStorage.type,
-        hide: '',
+        type: localStorage.type,       
         headers: [], 
-        items: this.$store.state.items,
-        title: this.Title(),
+        items: [],
+        title: this.getTitle(),
         loading: false,
         listType: localStorage.listType,
-        favorites: []
+        favorites: [],
+        message: "",
+        messageType: "success"
       }
     },
     methods: {
-      hideSearch(){
-        if (this.hide == ""){
-          this.hide = "hide"
-        }
-        else{
-          this.hide = ""
-        }
-      },
-      PostSearch(){
+      postSearch(){
         this.loading = true;
         if(this.type == 'building'){
-            this.$http.PostBuildingSearch(this.$store.state.searchModel)
+            this.$http.postBuildingSearch(this.$store.state.searchModel)
               .then(resp => {
                 this.items = resp.data;
                 this.message = "";
@@ -124,7 +117,7 @@
               .finally(() => this.loading = false)
         }
         else{
-              this.$http.PostTerrainSearch(this.$store.state.searchModel)
+              this.$http.postTerrainSearch(this.$store.state.searchModel)
                 .then(resp => {
                   this.items = resp.data;
                   this.message = "";
@@ -136,7 +129,7 @@
                 .finally(() => this.loading = false);
         }
       },
-      GetHeaders(){
+      getHeaders(){
         this.headers = [
               {text:"Naam", value:"name"},              
               {text:"Aantal personen", value:"amountPersons"},
@@ -146,9 +139,9 @@
               {text:"Favoriet"}
             ]
       },
-      RowClicked(selectedRow){
+      rowClicked(selectedRow){
         if (selectedRow.type == 'building'){          
-          this.$http.GetBuildingDetails(selectedRow.id)
+          this.$http.getBuildingDetails(selectedRow.id)
           .then(resp => {
             this.$store.commit('setCampPlace', resp.data);
             this.$router.push({name: 'buildingDetails'});
@@ -159,7 +152,7 @@
           }) 
         }
         else{
-          this.$http.GetTerrainDetails(selectedRow.id)
+          this.$http.getTerrainDetails(selectedRow.id)
           .then(resp => {
             this.$store.commit('setCampPlace', resp.data);
             this.$router.push({name: 'terrainDetails'});
@@ -170,7 +163,7 @@
           }) 
         }
       },
-      Title(){
+      getTitle(){
         if (this.type == 'building'){
           this.title = 'gebouwen'
         }
@@ -178,7 +171,7 @@
           this.title = 'terreinen'
         }
       },
-      GetColor(buttonType){
+      getColor(buttonType){
         if (this.type == buttonType){
           return 'primary'
         }
@@ -186,7 +179,7 @@
           return 'indigo lighten-5'
         }
       },
-      GetListTypeColor(buttonType){
+      getListTypeColor(buttonType){
         if (this.listType == buttonType){
           return 'primary'
         }
@@ -194,7 +187,7 @@
           return 'indigo lighten-5'
         }
       },
-      SetLocalStorage(type, value){
+      setLocalStorage(type, value){
         switch(type){
           case 'type':
             localStorage.type = value;
@@ -204,7 +197,7 @@
             break;
         }
       },
-      InitLocalStorage(){
+      initLocalStorage(){
         if (localStorage.type == null){
           localStorage.type = 'building';
           this.type = 'building';
@@ -214,12 +207,12 @@
           this.listType = 'list';
         }
       },
-      NewFavorite(item){
-        if (!this.IsFavorite(item.id)){
+      newFavorite(item){
+        if (!this.isFavorite(item.id)){
           this.favorites.push(item);
         }
         else{
-          this.RemoveFavorite(item.id);
+          this.removeFavorite(item.id);
         }
         this.saveFavorites();
       },
@@ -227,7 +220,7 @@
         const parsed = JSON.stringify(this.favorites);
         localStorage.favorites = parsed;
       },
-      IsFavorite(id){
+      isFavorite(id){
         for (var i = 0; i < this.favorites.length; i++){
           if (this.favorites[i].id == id){
             return true;
@@ -235,10 +228,10 @@
         }
         return false;
       },
-      GetFavorites(){
+      getFavorites(){
         this.favorites = JSON.parse(localStorage.favorites)
       },
-      RemoveFavorite(id){
+      removeFavorite(id){
         for (var i = 0; i < this.favorites.length; i++){
           if (this.favorites[i].id == id){
             this.favorites.splice(i, 1);
@@ -255,13 +248,13 @@
     },
     watch: {
       type: function () {
-        this.GetHeaders(),
-        this.PostSearch(),
-        this.Title()
-        this.SetLocalStorage('type', this.type)
+        this.getHeaders(),
+        this.postSearch(),
+        this.getTitle()
+        this.setLocalStorage('type', this.type)
       },
       listType: function (){
-        this.SetLocalStorage('listType', this.listType)
+        this.setLocalStorage('listType', this.listType)
       }
     }
 }
@@ -280,9 +273,6 @@
   .searchSpecific{
     width: 50%;
     float: left;
-  }
-  .hide{
-    display:none;
   }
   button{
     width:50%;

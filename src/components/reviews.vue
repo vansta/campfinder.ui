@@ -141,7 +141,7 @@
     props: [],
     mounted () {
       if (this.model != null){
-        this.$http.GetReviewsById(this.model.id)
+        this.$http.getReviewsById(this.model.id)
           .then(resp => this.reviews = resp.data)
           .catch(error => alert(error))
       }

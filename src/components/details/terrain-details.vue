@@ -73,13 +73,13 @@
         </v-col>
       </v-row>
       <span class="bottomright">
-        <v-btn color="primary" @click="Update">Update</v-btn>
+        <v-btn color="secondary" @click="Update">Update</v-btn>
         <v-dialog
           v-model="dialog"
         >
           <template v-slot:activator="{ on }">
             <v-btn 
-              color="primary"
+              color="error"
               v-on="on"
               >
               Verwijderen
@@ -94,7 +94,7 @@
           </v-card-title>
   
           <v-card-text>
-            Ben je zeker dat je {{model.name}} wil verwijderen?
+            Ben je zeker dat je <strong> {{model.name}} </strong> wil verwijderen?
           </v-card-text>
   
           <v-divider></v-divider>
@@ -114,6 +114,7 @@
       </span>
     </v-container>
     </v-card>
+    <v-alert :type="messageType" v-if="message != ''">{{message}}</v-alert>
   </section>
 
 </template>
@@ -138,7 +139,9 @@
       return {
         model: this.$store.state.selectedCampPlace,
         specific: '',
-        dialog:false
+        dialog:false,
+        message: '',
+        messageType: 'success'
       }
     },
     methods: {
@@ -155,8 +158,20 @@
         this.$router.push({name: 'new', params: { type: 'terrain'} });
       },
       Remove(){
-        this.$http.RemoveTerrain(this.model.id);    
-        this.$router.push({name: 'search'});            
+        this.$http.RemoveTerrain(this.model.id)
+          .then(resp => {    
+            this.dialog = false;   
+            this.messageType = "success";
+            this.message = resp.data;
+            setTimeout(() => {
+               this.$router.push({name: 'search'});
+            }, 2000);
+          })
+          .catch(error => {
+            this.dialog = false;
+            this.messageType = "error";
+            this.message = this.$error.getError(error);
+          });               
       }
     },
     computed: {

@@ -56,7 +56,7 @@
         <v-col
           key="2"
         >
-          <v-btn type="submit" class="fullwidth" @click="enableNew = !enableNew">Nieuwe review</v-btn>
+          <v-btn type="submit" class="fullwidth" @click="enableNew = !enableNew" color="secondary">Nieuwe review</v-btn>
         </v-col>
       </v-row>  
     </v-container>
@@ -110,6 +110,9 @@
       </v-row>
       </v-form>
     </v-card>
+    <v-alert type="error" v-if="message != ''">
+      {{message}}
+    </v-alert>
     <v-item-group>
       <v-row>
         <v-col
@@ -154,7 +157,8 @@
         valid: false,
         enableNew: this.$route.params.enableNew,
         menu: false,
-        loading: false
+        loading: false,
+        message: ""
       }
     },
     methods: {
@@ -168,10 +172,12 @@
           this.loading = true;
           this.newReview.campPlaceId = this.model.id
           this.$http.PostNewReview(this.newReview)
-            .then(resp => this.reviews.push(resp.data))
-            .then(() => this.newReview = {})
-            .then(() => this.loading = false)
-            .catch(error => alert(error))
+            .then(resp => {
+              this.reviews.push(resp.data);
+              this.newReview = {};              
+            })
+            .catch(error => this.message = this.$error.getError(error))
+            .finally(() => this.loading = false)
         }
         
       }

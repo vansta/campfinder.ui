@@ -67,8 +67,8 @@
        <v-row
       key="5"
       >
-          <v-btn type="button" @click="RouteToReviews">Reviews</v-btn>
-          <v-btn type="button" @click="RouteToNewReview">Nieuwe review</v-btn>
+          <v-btn type="button" @click="RouteToReviews" color="secondary">Reviews</v-btn>
+          <v-btn type="button" @click="RouteToNewReview" color="secondary">Nieuwe review</v-btn>
       </v-row>
       
       

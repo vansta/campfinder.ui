@@ -10,25 +10,25 @@ Vue.config.productionTip = false
 
 Vue.use(Vuex)
 
-import commonDetails from '../src/components/details/common-details.vue';
 import buildingDetails from '../src/components/details/building-details.vue';
 import terrainDetails from '../src/components/details/terrain-details.vue';
 import newCampPlace from '../src/components/new-campplace/new-common.vue';
 import search from '../src/components/search/search.vue';
 import reviews from '../src/components/reviews.vue'
 
-import services from '../src/Services/ApiServices';
+import apiService from '../src/Services/ApiServices';
+import errorService from '../src/Services/ErrorService';
 //import { store } from "../src/stores/store";
 
-Vue.prototype.$http = services;
+Vue.prototype.$http = apiService;
+Vue.prototype.$error = errorService;
 Vue.filter('formatDate', function(value){
   if (value){
     return moment(String(value)).format('DD/MM/YYYY')
   }
 })
 
-const routes = [
-  {path: '/details', name:"commonDetails", component: commonDetails},
+const routes = [  
   {path: '/details/building', name:"buildingDetails", component: buildingDetails},
   {path: '/details/terrain', name:"terrainDetails", component: terrainDetails },
   {path: '/new/terrain', name:"new", component: newCampPlace},

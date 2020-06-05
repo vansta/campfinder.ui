@@ -41,6 +41,7 @@
     
     </div>
     <h1>Overzicht {{title}}</h1>
+    <v-alert :type="messageType" v-if="message != ''">{{message}}</v-alert>
     <v-btn block @click="PostSearch" color="primary" :loading="loading">Zoeken</v-btn>
     <v-data-table
       v-if="listType == 'list'"
@@ -112,13 +113,27 @@
         this.loading = true;
         if(this.type == 'building'){
             this.$http.PostBuildingSearch(this.$store.state.searchModel)
-              .then(resp => this.items = resp.data)
-              .then(() => this.loading = false);
+              .then(resp => {
+                this.items = resp.data;
+                this.message = "";
+              })     
+              .catch(error => {
+                this.messageType = "error";
+                this.message = this.$error.getError(error);
+              })         
+              .finally(() => this.loading = false)
         }
         else{
               this.$http.PostTerrainSearch(this.$store.state.searchModel)
-                .then(resp => this.items = resp.data)
-                .then(() => this.loading = false);
+                .then(resp => {
+                  this.items = resp.data;
+                  this.message = "";
+                })  
+                .catch(error => {
+                  this.messageType = "error";
+                  this.message = this.$error.getError(error);
+                })              
+                .finally(() => this.loading = false);
         }
       },
       GetHeaders(){
@@ -134,13 +149,25 @@
       RowClicked(selectedRow){
         if (selectedRow.type == 'building'){          
           this.$http.GetBuildingDetails(selectedRow.id)
-          .then(resp => this.$store.commit('SetCampPlace', resp.data))
-          .then(() => this.$router.push({name: 'buildingDetails'}))
+          .then(resp => {
+            this.$store.commit('SetCampPlace', resp.data);
+            this.$router.push({name: 'buildingDetails'});
+          })
+          .catch(error => {
+            this.messageType = "error";
+            this.message = this.$error.getError(error);
+          }) 
         }
         else{
           this.$http.GetTerrainDetails(selectedRow.id)
-          .then(resp => this.$store.commit('SetCampPlace', resp.data))
-          .then(() => this.$router.push({name: 'terrainDetails'}))
+          .then(resp => {
+            this.$store.commit('SetCampPlace', resp.data);
+            this.$router.push({name: 'terrainDetails'});
+          })
+          .catch(error => {
+            this.messageType = "error";
+            this.message = this.$error.getError(error);
+          }) 
         }
       },
       Title(){

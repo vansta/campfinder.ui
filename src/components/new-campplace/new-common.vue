@@ -58,6 +58,9 @@
         <v-switch v-model="model.beds" label="Bedden" outlined/>
       </v-form>
     </v-card>
+    <v-alert :type="messageType" v-if="message != ''">
+      {{message}}
+    </v-alert>
     <v-btn block color="primary" @click="SendNewCampPlace">Verzenden</v-btn>
   </section>
 
@@ -93,7 +96,9 @@
         valid: true,
         generalValid: true,
         personValid: true,
-        placeValid: true
+        placeValid: true,
+        message: "",
+        messageType: "success"
       }
     },
     methods: {
@@ -102,11 +107,31 @@
         if (this.IsValid()){
           if (this.type == 'terrain'){
             this.$http.PostNewTerrain(this.model)
-              .then(() => this.ClearAndToHome())
+              .then(resp => {
+                this.messageType = "success";
+                  this.message = resp.data;
+                setTimeout(() => {                  
+                  this.ClearAndToHome();
+                }, 2000);                
+              })
+              .catch(error => {
+                this.messageType = "error";
+                this.message = this.$error.getError(error);
+              })
           }
           else{
-            this.$http.PostNewBuilding(this.model)
-              .then(() => this.ClearAndToHome())
+            this.$http.PostNewBuilding(this.model)              
+              .then(resp => {
+                this.messageType = "success";
+                  this.message = resp.data;
+                setTimeout(() => {                  
+                  this.ClearAndToHome();
+                }, 2000);                
+              })
+              .catch(error => {
+                this.messageType = "error";
+                this.message = this.$error.getError(error);
+              })
           }
         }
       },

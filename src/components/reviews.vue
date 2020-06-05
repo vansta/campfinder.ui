@@ -105,7 +105,7 @@
           cols="12"
           sm="4"
         >
-          <v-btn :disabled="!valid" type="submit" class="fullwidth" @click="SendNewReview" :loading="loading">Verzenden</v-btn>
+          <v-btn :disabled="!valid" type="submit" class="fullwidth" @click="sendNewReview" :loading="loading">Verzenden</v-btn>
         </v-col>
       </v-row>
       </v-form>
@@ -162,16 +162,16 @@
       }
     },
     methods: {
-      FormatDate(date){
+      formatDate(date){
         if (date){
           return String(date).format('ddMMyyyy')
         }
       },
-      SendNewReview(){
+      sendNewReview(){
         if (this.valid){
           this.loading = true;
           this.newReview.campPlaceId = this.model.id
-          this.$http.PostNewReview(this.newReview)
+          this.$http.postNewReview(this.newReview)
             .then(resp => {
               this.reviews.push(resp.data);
               this.newReview = {};              

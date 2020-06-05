@@ -51,7 +51,7 @@ export default{
             buildingSearch
         )
     },
-    PostNewReview(review){
+    postNewReview(review){
         return ajax.post('reviews', 
             review
         )
@@ -62,7 +62,7 @@ export default{
         return ajax.delete('building/delete', 
             {params: {id: id}})
     },
-    RemoveTerrain(id){
+    removeTerrain(id){
         return ajax.delete('terrain/delete', 
             {params: {id: id}})
     }

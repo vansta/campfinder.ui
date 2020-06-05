@@ -2,7 +2,7 @@
 
   <section class="common-details">
     <v-card>
-      <h2 @click="Hide('general')">Algemeen</h2>
+      <h2 @click="hide('general')">Algemeen</h2>
     <v-container :class="general">
       <v-row
       key="1"
@@ -75,7 +75,7 @@
     </v-container>
     </v-card>
     <v-card>
-      <h2 @click="Hide('place')">Plaats</h2>
+      <h2 @click="hide('place')">Plaats</h2>
     <v-container  :class="place">
       <v-row
       key="1"
@@ -209,7 +209,7 @@
     </v-card>
 
     <v-card>
-      <h2 @click="Hide('person')">Verhuurder</h2>
+      <h2 @click="hide('person')">Verhuurder</h2>
     <v-container :class="person">
       <v-row
       key="1"
@@ -306,7 +306,7 @@
           this.$router.push({name:'reviews', params: {enableNew: true}});
         }
       },
-      Hide(type){
+      hide(type){
         switch (type) {
           case 'general':
             if (this.general == ''){

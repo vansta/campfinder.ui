@@ -37,8 +37,8 @@
       </v-form>
     </v-card>
     <v-form>
-      <v-btn @click="type = 'terrain'" :color="GetColor('terrain')" :depressed="this.type != 'terrain'">Terrein</v-btn>
-      <v-btn @click="type = 'building'" :color="GetColor('building')" :depressed="this.type != 'building'">Gebouw</v-btn>
+      <v-btn @click="type = 'terrain'" :color="getColor('terrain')" :depressed="this.type != 'terrain'">Terrein</v-btn>
+      <v-btn @click="type = 'building'" :color="getColor('building')" :depressed="this.type != 'building'">Gebouw</v-btn>
     </v-form>
 
     <v-card class="form" v-if="type == 'terrain'">
@@ -61,7 +61,7 @@
     <v-alert :type="messageType" v-if="message != ''">
       {{message}}
     </v-alert>
-    <v-btn block color="primary" @click="SendNewCampPlace">Verzenden</v-btn>
+    <v-btn block color="primary" @click="sendNewCampPlace" :loading="loading">Verzenden</v-btn>
   </section>
 
 </template>
@@ -98,44 +98,48 @@
         personValid: true,
         placeValid: true,
         message: "",
-        messageType: "success"
+        messageType: "success",
+        loading: false
       }
     },
     methods: {
-      SendNewCampPlace(){
-        this.Validate();
-        if (this.IsValid()){
+      sendNewCampPlace(){
+        this.validate();
+        if (this.isValid()){
+          this.loading = true;
           if (this.type == 'terrain'){
             this.$http.PostNewTerrain(this.model)
               .then(resp => {
                 this.messageType = "success";
-                  this.message = resp.data;
+                this.message = resp.data;
                 setTimeout(() => {                  
-                  this.ClearAndToHome();
+                  this.clearAndToHome();
                 }, 2000);                
               })
               .catch(error => {
                 this.messageType = "error";
                 this.message = this.$error.getError(error);
               })
+              .finally(() => this.loading = false);
           }
           else{
             this.$http.PostNewBuilding(this.model)              
               .then(resp => {
                 this.messageType = "success";
-                  this.message = resp.data;
+                this.message = resp.data;
                 setTimeout(() => {                  
-                  this.ClearAndToHome();
+                  this.clearAndToHome();
                 }, 2000);                
               })
               .catch(error => {
                 this.messageType = "error";
                 this.message = this.$error.getError(error);
               })
+              .finally(() => this.loading = false);
           }
         }
       },
-      GetColor(buttonType){
+      getColor(buttonType){
         if (this.type == buttonType){
           return 'primary'
         }
@@ -143,14 +147,14 @@
           return 'indigo lighten-5'
         }
       },
-      IsValid(){
+      isValid(){
         return (this.generalValid && this.personValid && this.placeValid && this.valid);
       },
-      ClearAndToHome(){
-        this.$store.commit('ClearNewCampPlace');
+      clearAndToHome(){
+        this.$store.commit('clearNewCampPlace');
         this.$router.push({name:'search'});
       },
-      Validate(){
+      validate(){
         this.$refs.form.validate();
         this.$refs.generalForm.validate();
         this.$refs.personForm.validate();

@@ -12,7 +12,7 @@ export const store = new Vuex.Store({
         setItems (state, setItems){
             state.items = setItems;
         },
-        SetCampPlace(state, campPlace){
+        setCampPlace(state, campPlace){
             state.selectedCampPlace = campPlace;
         }
     }

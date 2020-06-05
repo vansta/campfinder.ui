@@ -150,7 +150,7 @@
         if (selectedRow.type == 'building'){          
           this.$http.GetBuildingDetails(selectedRow.id)
           .then(resp => {
-            this.$store.commit('SetCampPlace', resp.data);
+            this.$store.commit('setCampPlace', resp.data);
             this.$router.push({name: 'buildingDetails'});
           })
           .catch(error => {
@@ -161,7 +161,7 @@
         else{
           this.$http.GetTerrainDetails(selectedRow.id)
           .then(resp => {
-            this.$store.commit('SetCampPlace', resp.data);
+            this.$store.commit('setCampPlace', resp.data);
             this.$router.push({name: 'terrainDetails'});
           })
           .catch(error => {

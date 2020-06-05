@@ -54,13 +54,13 @@ const store = new Vuex.Store({
     setSearchModel(state, newSearchModel){
       state.searchModel = newSearchModel;
     },
-    SetCampPlace(state, campPlace){
-        state.selectedCampPlace = campPlace;
+    setCampPlace(state, campPlace){
+      state.selectedCampPlace = campPlace;
     },
-    ClearNewCampPlace(state){
+    clearNewCampPlace(state){
       state.newCampPlace = {place:{},person:{}}
     },
-    SetNewCampPlace(state, newCampPlace){
+    setNewCampPlace(state, newCampPlace){
       state.newCampPlace = newCampPlace;
     }
   }

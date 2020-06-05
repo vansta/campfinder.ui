@@ -3,7 +3,7 @@
   <section class="building-details">
     <commonDetails/>
     <v-card>
-    <h2 @click="Hide">Gebouw</h2>
+    <h2 @click="hide">Gebouw</h2>
     <v-container :class="specific">
       <v-row key="1">
         <v-col
@@ -73,7 +73,7 @@
         </v-col>
       </v-row>
       <span class="bottomright">
-        <v-btn color="secondary" @click="Update">Update</v-btn>
+        <v-btn color="secondary" @click="update">update</v-btn>
         <v-dialog
           v-model="dialog"
         >
@@ -104,7 +104,7 @@
             <v-btn
               color="primary"
               text
-              @click="Remove"
+              @click="remove"
             >
               Ja
             </v-btn>
@@ -130,7 +130,7 @@
     mounted () {
       // this.$http.GetBuildingDetails(this.$route.params.id)
       //   //.then(resp => this.model = resp.data)
-      //   .then(resp => this.$store.commit('SetCampPlace', resp.data))
+      //   .then(resp => this.$store.commit('setCampPlace', resp.data))
       //   .catch(error => alert(error))
     },
     data () {
@@ -143,7 +143,7 @@
       }
     },
     methods: {
-      Hide(){
+      hide(){
         if (this.specific == ''){
           this.specific = 'hide'
         }
@@ -151,11 +151,11 @@
           this.specific = ''
         }
       },
-      Update(){
-        this.$store.commit('SetNewCampPlace', this.model);
+      update(){
+        this.$store.commit('setNewCampPlace', this.model);
         this.$router.push({name: 'new', params: { type: 'building'} });
       },
-      Remove(){
+      remove(){
         this.$http.RemoveBuilding(this.model.id)
           .then(resp => {    
             this.dialog = false;   

@@ -320,10 +320,4 @@
   .v-card{
     padding:2%;
   }
-  .container{
-    padding: 1%;
-  }
-  #updateBtn{
-    float:left;
-  }
 </style>

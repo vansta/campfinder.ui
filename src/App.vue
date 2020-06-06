@@ -10,7 +10,7 @@
           alt="Scouting Roeselare Logo"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          :src="logo"
           transition="scale-transition"
           width="40"
         />
@@ -34,7 +34,7 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    <v-footer padless>
+    <v-footer padless color="secondary">
       <v-col
         class="text-center"
         cols="12"
@@ -47,14 +47,14 @@
 
 <script>
 
-export default {
-  name: 'App',
-
+export default {  
+  name: 'App',  
   components: {
   },
 
   data: () => ({
     //
+    logo: require("./assets/logo.png")
   }),
   methods:{
     routeToNewCampPlace(){

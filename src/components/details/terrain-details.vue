@@ -1,6 +1,6 @@
 <template lang="html">
 
-  <section class="terrain-overview">
+  <section class="terrain-details">
     
     <commonDetails/>
     <v-card>
@@ -124,10 +124,7 @@
   import commonDetails from '../details/common-details.vue'
 
   export default  {
-
-    
-
-    name: 'terrain-overview',
+    name: 'terrain-details',
     props: [],
     mounted () {
       // this.$http.getTerrainDetails(this.$route.params.id)

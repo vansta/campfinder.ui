@@ -2,42 +2,41 @@
 
   <section >
     <div>
-    <v-card class="searchGeneral">
-      <v-form>
-        <v-text-field v-model="$store.state.searchModel.name" clearable  label="Naam" outlined/>
-        <v-text-field v-model="$store.state.searchModel.amountPersons" clearable  label="Aantal personen" outlined/>
-        <v-combobox :items="provinces" v-model="$store.state.searchModel.province" multiple clearable chips label="provincie" outlined/>
-        <v-row>
-          <v-col>
-            <v-switch v-model="$store.state.searchModel.foreign" label='Buitenland'/>
-          </v-col>
-          <v-col>
-            <!-- <v-btn  @click="listType = 'list'" :color="getListTypeColor('list')" :depressed="this.listType != 'list'">Lijst</v-btn>
-            <v-btn  @click="listType = 'fiche'" :color="getListTypeColor('fiche')" :depressed="this.listType != 'fiche'">Fiches</v-btn> -->
-            <v-btn id="favorites" @click="items = favorites" bottom type="toggle">
-              Favorieten
-              <v-spacer></v-spacer>
-              <v-icon  color="pink">favorite</v-icon>              
-            </v-btn>
-          </v-col>
-        </v-row>
-        
-      </v-form>
-    </v-card>
-    <v-card class="searchSpecific">
-      <v-btn link @click="type = 'terrain', postSearch" :color="getColor('terrain')" :depressed="this.type != 'terrain'">
-        Terrein
-      </v-btn>
-      <v-btn @click="type = 'building', postSearch" :color="getColor('building')" :depressed="this.type != 'building'">
-        Gebouw
-      </v-btn>
-      <searchBuilding v-if="this.type == 'building'"/>
-      <searchTerrain v-if="this.type == 'terrain'"/>
-      <v-form>
-        <v-rating v-model="$store.state.searchModel.minimumScore" half-increments clearable label="Minimum score"/>
-        <v-slider v-model="$store.state.searchModel.accessibility" label="Bereikbaarheid in uren" thumb-label max="12" dense ticks step="0.5"/>
-      </v-form>
-    </v-card>
+      <div class="searchGeneral">
+        <v-form>
+          <v-text-field v-model="$store.state.searchModel.name" clearable dense  label="Naam" outlined/>
+          <v-text-field v-model="$store.state.searchModel.amountPersons" clearable dense label="Aantal personen" outlined/>
+          <v-combobox :items="provinces" v-model="$store.state.searchModel.province" dense multiple clearable chips label="provincie" outlined/>
+          <v-row>
+            <v-col>
+              <v-switch v-model="$store.state.searchModel.foreign" label='Buitenland'/>
+            </v-col>
+            <v-col>
+              <!-- <v-btn  @click="listType = 'list'" :color="getListTypeColor('list')" :depressed="this.listType != 'list'">Lijst</v-btn>
+              <v-btn  @click="listType = 'fiche'" :color="getListTypeColor('fiche')" :depressed="this.listType != 'fiche'">Fiches</v-btn> -->
+              <v-btn id="favorites" @click="items = favorites" color="secondary" bottom type="toggle">
+                Favorieten              
+                <v-icon  color="pink">favorite</v-icon>              
+              </v-btn>
+            </v-col>
+          </v-row>
+          
+        </v-form>
+      </div>
+      <div class="searchSpecific">
+        <v-btn link @click="type = 'terrain', postSearch" :color="getColor('terrain')" :depressed="this.type != 'terrain'">
+          Terrein
+        </v-btn>
+        <v-btn @click="type = 'building', postSearch" :color="getColor('building')" :depressed="this.type != 'building'">
+          Gebouw
+        </v-btn>
+        <searchBuilding v-if="this.type == 'building'"/>
+        <searchTerrain v-if="this.type == 'terrain'"/>
+        <v-form>
+          <v-rating v-model="$store.state.searchModel.minimumScore" half-increments clearable label="Minimum score"/>
+          <v-slider v-model="$store.state.searchModel.accessibility" label="Bereikbaarheid in uren" thumb-label max="12" dense ticks step="0.5"/>
+        </v-form>
+      </div>
     
     </div>
     <h1>Overzicht {{title}}</h1>
@@ -49,22 +48,14 @@
       :items="items"
       @click:row="rowClicked"
     >
-    <template v-slot:item="row">
-          <tr @click="rowClicked(row.item)">
-            <td>{{row.item.name}}</td>
-            <td>{{row.item.amountPersons}}</td>
-            <td>{{row.item.city}}</td>
-            <td>{{row.item.website}}</td>
-            <td>
-              <v-rating v-model="row.item.averageScore" dense small readonly half-increments/>
-            </td>
-            <td>
-                <v-btn icon color="pink" @click.stop="newFavorite(row.item)">
-                    <v-icon v-if="isFavorite(row.item.id)">favorite</v-icon>
-                    <v-icon v-else>favorite_border</v-icon>
-                </v-btn>
-            </td>
-          </tr>
+      <template v-slot:item.averageScore="{ item }">
+        <v-rating v-model="item.averageScore" dense small readonly half-increments></v-rating>
+      </template>
+      <template v-slot:item.favoriet="{ item }">
+        <v-btn icon color="pink" @click.stop="newFavorite(item)">
+          <v-icon v-if="isFavorite(item.id)">favorite</v-icon>
+          <v-icon v-else>favorite_border</v-icon>
+        </v-btn>
       </template>
     </v-data-table>
   </section>
@@ -88,7 +79,6 @@
     },
     data () {
       return {
-        searchModel: {},
         provinces: ["West-Vlaanderen", "Oost-Vlaanderen", "Antwerpen", "Limburg", "Vlaams-Brabant", "Henegouwen", "Waals-Brabant", "Luik", "Luxemburg", "Namen"],
         type: localStorage.type,       
         headers: [], 
@@ -136,7 +126,7 @@
               {text:"Stad", value:"city"},
               {text:"Website", value:"website"},
               {text:"Score", value:  "averageScore"},
-              {text:"Favoriet"}
+              {text:"Favoriet", value:"favoriet"}
             ]
       },
       rowClicked(selectedRow){
@@ -282,6 +272,7 @@
     clear: both;
   }
   #favorites{
-    width: 80%;
+    width: fit-content;
+    float:right;
   }
 </style>

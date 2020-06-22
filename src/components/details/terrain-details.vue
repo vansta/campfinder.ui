@@ -4,7 +4,7 @@
     
     <commonDetails/>
     <v-card>
-      <h2 @click="specific = !specific">Terrein</h2>
+      <h2 @click="specific = !specific" class="text-uppercase">Terrein</h2>
     <v-container v-if='specific'>
       <v-row key="1">
         <v-col

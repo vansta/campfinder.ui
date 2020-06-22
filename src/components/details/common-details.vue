@@ -2,7 +2,7 @@
 
   <section class="common-details">
     <v-card>
-      <h2 @click="general = !general">Algemeen</h2>
+      <h2 @click="general = !general" class="text-uppercase">Algemeen</h2>
     <v-container v-if="general">
 
       <v-row
@@ -76,7 +76,7 @@
     </v-container>
     </v-card>
     <v-card>
-      <h2 @click="place = !place">Plaats</h2>
+      <h2 @click="place = !place" class="text-uppercase">Plaats</h2>
     <v-container  v-if="place">
       <v-row
       key="1"
@@ -210,7 +210,7 @@
     </v-card>
 
     <v-card>
-      <h2 @click="person = !person">Verhuurder</h2>
+      <h2 @click="person = !person" class="text-uppercase">Verhuurder</h2>
     <v-container v-if="person">
       <v-row
       key="1"

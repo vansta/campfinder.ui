@@ -3,7 +3,7 @@
   <section class="building-details">
     <commonDetails/>
     <v-card>
-    <h2 @click="specific = !specific">Gebouw</h2>
+    <h2 @click="specific = !specific" class="text-uppercase">Gebouw</h2>
     <v-container v-if="specific">
       <v-row key="1">
         <v-col

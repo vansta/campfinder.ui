@@ -39,7 +39,7 @@
       </div>
     
     </div>
-    <h1>Overzicht {{title}}</h1>
+    <h1 class="text-uppercase">Overzicht {{title}}</h1>
     <v-alert :type="messageType" v-if="message != ''">{{message}}</v-alert>
     <v-btn block @click="postSearch" color="primary" :loading="loading">Zoeken</v-btn>
     <v-data-table
@@ -48,6 +48,9 @@
       :items="items"
       @click:row="rowClicked"
     >
+      <template  @click.stop="" v-slot:item.website="{ item }">
+        <a :href="item.website">{{item.website}}</a>
+      </template>
       <template v-slot:item.averageScore="{ item }">
         <v-rating v-model="item.averageScore" dense small readonly half-increments></v-rating>
       </template>
@@ -59,7 +62,6 @@
       </template>
     </v-data-table>
   </section>
-
 </template>
 
 <script lang="js">

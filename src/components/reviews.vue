@@ -140,15 +140,12 @@
     name: 'reviews',
     props: [],
     mounted () {
-      if (this.model != null){
-        this.$http.getReviewsById(this.model.id)
-          .then(resp => this.reviews = resp.data)
-          .catch(error => alert(error))
-      }
+      this.getReviews()
+      this.getCampPlace()
     },
     data () {
       return {
-        model: this.$store.state.selectedCampPlace,
+        model: {},
         reviews:[],
         newReview:{},
         rules: {
@@ -170,7 +167,7 @@
       sendNewReview(){
         if (this.valid){
           this.loading = true;
-          this.newReview.campPlaceId = this.model.id
+          this.newReview.campPlaceId = this.$route.params.id
           this.$http.postNewReview(this.newReview)
             .then(resp => {
               this.reviews.push(resp.data);
@@ -180,6 +177,16 @@
             .finally(() => this.loading = false)
         }
         
+      },
+      getReviews(){
+        this.$http.getReviewsById(this.$route.params.id)
+          .then(resp => this.reviews = resp.data)
+          .catch(error => alert(error))
+      },
+      getCampPlace(){
+        this.$http.getCampPlace(this.$route.params.id)
+          .then(resp => this.model = resp.data)
+          .catch(error => alert(error))
       }
     },
     computed: {

@@ -283,13 +283,15 @@
 
   export default  {
     name: 'common-details',
-    props: [],
+    props: {
+      model: Object
+    },
     mounted () {
       
     },
     data () {
       return {
-        model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
+        // model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
         general: true,
         place: true,
         person: true
@@ -299,12 +301,12 @@
     methods: {
       RouteToReviews(){
         if(this.$route.path != '/reviews'){
-          this.$router.push({name:'reviews', params: {enableNew: false}});
+          this.$router.push({name:'reviews', params: { enableNew: false, id: this.$route.params.id }});
         }
       },
       RouteToNewReview(){
         if(this.$route.path != '/reviews'){
-          this.$router.push({name:'reviews', params: {enableNew: true}});
+          this.$router.push({name:'reviews', params: { enableNew: true, id: this.$route.params.id }});
         }
       }
     },

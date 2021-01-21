@@ -97,7 +97,7 @@
       postSearch(){
         this.loading = true;
         if(this.type == 'building'){
-            this.$http.postBuildingSearch(this.$store.state.searchModel)
+            this.$http.getBuildingSearch(this.$store.state.searchModel)
               .then(resp => {
                 this.items = resp.data;
                 this.message = "";
@@ -109,7 +109,7 @@
               .finally(() => this.loading = false)
         }
         else{
-              this.$http.postTerrainSearch(this.$store.state.searchModel)
+              this.$http.getTerrainSearch(this.$store.state.searchModel)
                 .then(resp => {
                   this.items = resp.data;
                   this.message = "";
@@ -133,26 +133,10 @@
       },
       rowClicked(selectedRow){
         if (selectedRow.type == 'building'){          
-          this.$http.getBuildingDetails(selectedRow.id)
-          .then(resp => {
-            this.$store.commit('setCampPlace', resp.data);
-            this.$router.push({name: 'buildingDetails'});
-          })
-          .catch(error => {
-            this.messageType = "error";
-            this.message = this.$error.getError(error);
-          }) 
+          this.$router.push({ name: 'buildingDetails', params: { id: selectedRow.id }});
         }
         else{
-          this.$http.getTerrainDetails(selectedRow.id)
-          .then(resp => {
-            this.$store.commit('setCampPlace', resp.data);
-            this.$router.push({name: 'terrainDetails'});
-          })
-          .catch(error => {
-            this.messageType = "error";
-            this.message = this.$error.getError(error);
-          }) 
+          this.$router.push({ name: 'terrainDetails', params: { id: selectedRow.id }});
         }
       },
       getTitle(){

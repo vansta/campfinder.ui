@@ -1,5 +1,6 @@
 import axios from '../../node_modules/axios';
 import settings from '../settings/settings';
+import Qs from '../../node_modules/qs'
 
 // var config = {
 //     headers: {'Acces-Control-Allow-Origin': '*'}
@@ -29,6 +30,26 @@ export default{
         return ajax.get('reviews', 
         {params: {id: id}})
     },
+    getBuildingSearch(buildingSearch){
+        return ajax.get('building/search', {
+            params: buildingSearch,
+            paramsSerializer: function(params) {
+                return Qs.stringify(params)
+            }
+        })
+    },
+    getTerrainSearch(terrainSearch){
+        return ajax.get('terrain/search', {
+            params: terrainSearch
+        })
+    },
+    getCampPlace(id){
+        return ajax.get('campplace', {
+            params: {
+                id
+            }
+        })
+    },
 
     //POST
     postNewBuilding(building){
@@ -39,16 +60,6 @@ export default{
     postNewTerrain(terrain){
         return ajax.post('terrain',
             terrain
-        )
-    },
-    postTerrainSearch(terrainSearch){
-        return ajax.post('terrain/search',
-            terrainSearch
-        )
-    },
-    postBuildingSearch(buildingSearch){
-        return ajax.post('building/search',
-            buildingSearch
         )
     },
     postNewReview(review){

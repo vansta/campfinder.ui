@@ -1,7 +1,7 @@
 <template lang="html">
 
   <section class="building-details">
-    <commonDetails/>
+    <commonDetails :model="model"/>
     <v-card>
     <h2 @click="specific = !specific" class="text-uppercase">Gebouw</h2>
     <v-container v-if="specific">
@@ -128,14 +128,14 @@
     name: 'building-details',
     props: [],
     mounted () {
-      // this.$http.getBuildingDetails(this.$route.params.id)
-      //   //.then(resp => this.model = resp.data)
-      //   .then(resp => this.$store.commit('setCampPlace', resp.data))
-      //   .catch(error => alert(error))
+      this.getBuilding()
     },
     data () {
       return {
-        model: this.$store.state.selectedCampPlace,
+        model: {
+          place: {},
+          person: {}
+        },
         specific: true,
         dialog: false,
         message: "",
@@ -162,6 +162,11 @@
             this.messageType = "error";
             this.message = this.$error.getError(error);
           });
+      },
+      getBuilding(){
+        this.$http.getBuildingDetails(this.$route.params.id)
+          .then(resp => this.model = resp.data)
+          .catch(error => alert(error))
       }
     },
     computed: {

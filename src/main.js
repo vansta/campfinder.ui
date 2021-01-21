@@ -29,10 +29,10 @@ Vue.filter('formatDate', function(value){
 })
 
 const routes = [  
-  {path: '/details/building', name:"buildingDetails", component: buildingDetails},
-  {path: '/details/terrain', name:"terrainDetails", component: terrainDetails },
+  {path: '/details/building/:id', name:"buildingDetails", component: buildingDetails},
+  {path: '/details/terrain/:id', name:"terrainDetails", component: terrainDetails },
   {path: '/new', name:"new", component: newCampPlace},
-  {path: '/reviews', name: 'reviews', component: reviews},
+  {path: '/reviews/:id', name: 'reviews', component: reviews},
   {path: '', name: 'search', component: search}
 ]
 

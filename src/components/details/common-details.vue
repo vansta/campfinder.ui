@@ -2,8 +2,9 @@
 
   <section class="common-details">
     <v-card>
-      <h2 @click="Hide('general')">Algemeen</h2>
-    <v-container :class="general">
+      <h2 @click="general = !general" class="text-uppercase">Algemeen</h2>
+    <v-container v-if="general">
+
       <v-row
       key="1"
       >
@@ -67,16 +68,16 @@
        <v-row
       key="5"
       >
-          <v-btn type="button" @click="RouteToReviews">Reviews</v-btn>
-          <v-btn type="button" @click="RouteToNewReview">Nieuwe review</v-btn>
+          <v-btn type="button" @click="RouteToReviews" color="secondary">Reviews</v-btn>
+          <v-btn type="button" @click="RouteToNewReview" color="secondary">Nieuwe review</v-btn>
       </v-row>
       
       
     </v-container>
     </v-card>
     <v-card>
-      <h2 @click="Hide('place')">Plaats</h2>
-    <v-container  :class="place">
+      <h2 @click="place = !place" class="text-uppercase">Plaats</h2>
+    <v-container  v-if="place">
       <v-row
       key="1"
       >
@@ -209,8 +210,8 @@
     </v-card>
 
     <v-card>
-      <h2 @click="Hide('person')">Verhuurder</h2>
-    <v-container :class="person">
+      <h2 @click="person = !person" class="text-uppercase">Verhuurder</h2>
+    <v-container v-if="person">
       <v-row
       key="1"
       >
@@ -282,58 +283,30 @@
 
   export default  {
     name: 'common-details',
-    props: [],
+    props: {
+      model: Object
+    },
     mounted () {
       
     },
     data () {
       return {
-        model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
-        general: '',
-        place: '',
-        person: ''
+        // model: this.$store.state.selectedCampPlace, //this.$route.params.selectedCampPlace,
+        general: true,
+        place: true,
+        person: true
 
       }
     },
     methods: {
       RouteToReviews(){
         if(this.$route.path != '/reviews'){
-          this.$router.push({name:'reviews', params: {enableNew: false}});
+          this.$router.push({name:'reviews', params: { enableNew: false, id: this.$route.params.id }});
         }
       },
       RouteToNewReview(){
         if(this.$route.path != '/reviews'){
-          this.$router.push({name:'reviews', params: {enableNew: true}});
-        }
-      },
-      Hide(type){
-        switch (type) {
-          case 'general':
-            if (this.general == ''){
-              this.general = 'hide';
-            }
-            else{
-              this.general = ''
-            }
-            break;
-          case 'person':
-            if (this.person == ''){
-              this.person = 'hide';
-            }
-            else{
-              this.person = ''
-            }
-            break;
-          case 'place':
-            if (this.place == ''){
-              this.place = 'hide';
-            }
-            else{
-              this.place = ''
-            }
-            break;
-          default:
-            break;
+          this.$router.push({name:'reviews', params: { enableNew: true, id: this.$route.params.id }});
         }
       }
     },
@@ -348,11 +321,5 @@
 <style scoped lang="scss">
   .v-card{
     padding:2%;
-  }
-  .container{
-    padding: 1%;
-  }
-  #updateBtn{
-    float:left;
   }
 </style>

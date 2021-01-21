@@ -2,8 +2,8 @@
 
   <section class="new-common">
     <v-card class="form">
-      <h2>Algemeen</h2>
-      <v-form v-model="generalValid" ref="generalForm">
+      <h2 @click="general = !general" class="text-uppercase">Algemeen</h2>
+      <v-form v-if="general" v-model="generalValid" ref="generalForm">
         <v-text-field v-model="model.name" label="Naam" :rules="[rules.required]" outlined/>
         <v-text-field v-model="model.website" label="Website" outlined/>
         <v-text-field v-model="model.amountPersons" label="Aantal personen" :rules="[rules.required, rules.int]" outlined/>
@@ -12,8 +12,8 @@
       </v-form>
     </v-card>
     <v-card class="form">
-      <h2>Verhuurder</h2>
-      <v-form v-model="personValid" ref="personForm">
+      <h2 class="text-uppercase" @click="person = !person">Verhuurder</h2>
+      <v-form v-model="personValid" ref="personForm" v-if="person">
         <v-text-field v-model="model.person.firstName" label="Voornaam" outlined/>
         <v-text-field v-model="model.person.lastName" label="Familienaam" outlined/>
         <v-text-field v-model="model.person.mailAdress" label="Email" outlined/>
@@ -21,8 +21,8 @@
       </v-form>
     </v-card>
     <v-card class="form">
-      <h2>Plaats</h2>
-      <v-form v-model="placeValid" ref="placeForm">
+      <h2 class="text-uppercase" @click="place = !place">Plaats</h2>
+      <v-form v-model="placeValid" ref="placeForm" v-if="place">
         <v-text-field v-model="model.place.street" label="Straat" :rules="[rules.required]" outlined/>
         <v-text-field v-model="model.place.houseNumber" label="Nummer" outlined/>
         <v-text-field v-model="model.place.postNumber" label="Postcode" outlined/>
@@ -37,28 +37,31 @@
       </v-form>
     </v-card>
     <v-form>
-      <v-btn @click="type = 'terrain'" :color="GetColor('terrain')" :depressed="this.type != 'terrain'">Terrein</v-btn>
-      <v-btn @click="type = 'building'" :color="GetColor('building')" :depressed="this.type != 'building'">Gebouw</v-btn>
+      <v-btn @click="type = 'terrain'" :color="getColor('terrain')" :depressed="this.type != 'terrain'">Terrein</v-btn>
+      <v-btn @click="type = 'building'" :color="getColor('building')" :depressed="this.type != 'building'">Gebouw</v-btn>
     </v-form>
 
     <v-card class="form" v-if="type == 'terrain'">
-      <h2>Terrein</h2>
-      <v-form v-model="valid" ref="form">
+      <h2 class="text-uppercase" @click="specific = !specific">Terrein</h2>
+      <v-form v-model="valid" ref="form" v-if="specific">
         <v-switch v-model="model.water" label="Water"/>
         <v-switch v-model="model.electricity" label="Electriciteit"/>
         <v-switch v-model="model.toilets" label="Toiletten"/>
       </v-form>
     </v-card>
     <v-card class="form" v-if="type == 'building'">
-      <h2>Gebouw</h2>
-      <v-form v-model="valid" ref="form">
+      <h2 class="text-uppercase" @click="specific = !specific">Gebouw</h2>
+      <v-form v-model="valid" ref="form" v-if="specific">
         <v-text-field v-model="model.dormitories" :rules="[rules.required, rules.int]" label="Aantal slaapzalen" outlined/>
         <v-text-field v-model="model.daySpaces" :rules="[rules.required, rules.int]" label="Aantal dagzalen" outlined/>
         <v-switch v-model="model.kitchenGear" label="Keukenmateriaal aanwezig" outlined/>
         <v-switch v-model="model.beds" label="Bedden" outlined/>
       </v-form>
     </v-card>
-    <v-btn block color="primary" @click="SendNewCampPlace">Verzenden</v-btn>
+    <v-alert :type="messageType" v-if="message != ''">
+      {{message}}
+    </v-alert>
+    <v-btn block color="primary" @click="sendNewCampPlace" :loading="loading">Verzenden</v-btn>
   </section>
 
 </template>
@@ -93,24 +96,54 @@
         valid: true,
         generalValid: true,
         personValid: true,
-        placeValid: true
+        placeValid: true,
+        message: "",
+        messageType: "success",
+        loading: false,
+        general: true,
+        place: true,
+        person: true,
+        specific: true
       }
     },
     methods: {
-      SendNewCampPlace(){
-        this.Validate();
-        if (this.IsValid()){
+      sendNewCampPlace(){
+        this.validate();
+        if (this.isValid()){
+          this.loading = true;
           if (this.type == 'terrain'){
-            this.$http.PostNewTerrain(this.model)
-              .then(() => this.ClearAndToHome())
+            this.$http.postNewTerrain(this.model)
+              .then(resp => {
+                this.messageType = "success";
+                this.message = resp.data;
+                setTimeout(() => {                  
+                  this.clearAndToHome();
+                }, 2000);                
+              })
+              .catch(error => {
+                this.messageType = "error";
+                this.message = this.$error.getError(error);
+              })
+              .finally(() => this.loading = false);
           }
           else{
-            this.$http.PostNewBuilding(this.model)
-              .then(() => this.ClearAndToHome())
+            this.$http.postNewBuilding(this.model)              
+              .then(resp => {
+                this.messageType = "success";
+                this.message = resp.data;
+                setTimeout(() => {                  
+                  this.clearAndToHome();
+                }, 2000);                
+              })
+              .catch(error => {
+                this.messageType = "error";
+                this.message = this.$error.getError(error);
+              })
+              .finally(() => this.loading = false);
           }
         }
       },
-      GetColor(buttonType){
+      getColor(buttonType){
         if (this.type == buttonType){
           return 'primary'
         }
@@ -118,14 +151,14 @@
           return 'indigo lighten-5'
         }
       },
-      IsValid(){
+      isValid(){
         return (this.generalValid && this.personValid && this.placeValid && this.valid);
       },
-      ClearAndToHome(){
-        this.$store.commit('ClearNewCampPlace');
+      clearAndToHome(){
+        this.$store.commit('clearNewCampPlace');
         this.$router.push({name:'search'});
       },
-      Validate(){
+      validate(){
         this.$refs.form.validate();
         this.$refs.generalForm.validate();
         this.$refs.personForm.validate();

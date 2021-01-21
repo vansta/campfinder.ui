@@ -56,7 +56,7 @@
         <v-col
           key="2"
         >
-          <v-btn type="submit" class="fullwidth" @click="enableNew = !enableNew">Nieuwe review</v-btn>
+          <v-btn type="submit" class="fullwidth" @click="enableNew = !enableNew" color="secondary">Nieuwe review</v-btn>
         </v-col>
       </v-row>  
     </v-container>
@@ -105,11 +105,14 @@
           cols="12"
           sm="4"
         >
-          <v-btn :disabled="!valid" type="submit" class="fullwidth" @click="SendNewReview" :loading="loading">Verzenden</v-btn>
+          <v-btn :disabled="!valid" type="submit" class="fullwidth" @click="sendNewReview" :loading="loading">Verzenden</v-btn>
         </v-col>
       </v-row>
       </v-form>
     </v-card>
+    <v-alert type="error" v-if="message != ''">
+      {{message}}
+    </v-alert>
     <v-item-group>
       <v-row>
         <v-col
@@ -137,15 +140,12 @@
     name: 'reviews',
     props: [],
     mounted () {
-      if (this.model != null){
-        this.$http.GetReviewsById(this.model.id)
-          .then(resp => this.reviews = resp.data)
-          .catch(error => alert(error))
-      }
+      this.getReviews()
+      this.getCampPlace()
     },
     data () {
       return {
-        model: this.$store.state.selectedCampPlace,
+        model: {},
         reviews:[],
         newReview:{},
         rules: {
@@ -154,26 +154,39 @@
         valid: false,
         enableNew: this.$route.params.enableNew,
         menu: false,
-        loading: false
+        loading: false,
+        message: ""
       }
     },
     methods: {
-      FormatDate(date){
+      formatDate(date){
         if (date){
           return String(date).format('ddMMyyyy')
         }
       },
-      SendNewReview(){
+      sendNewReview(){
         if (this.valid){
           this.loading = true;
-          this.newReview.campPlaceId = this.model.id
-          this.$http.PostNewReview(this.newReview)
-            .then(resp => this.reviews.push(resp.data))
-            .then(() => this.newReview = {})
-            .then(() => this.loading = false)
-            .catch(error => alert(error))
+          this.newReview.campPlaceId = this.$route.params.id
+          this.$http.postNewReview(this.newReview)
+            .then(resp => {
+              this.reviews.push(resp.data);
+              this.newReview = {};              
+            })
+            .catch(error => this.message = this.$error.getError(error))
+            .finally(() => this.loading = false)
         }
         
+      },
+      getReviews(){
+        this.$http.getReviewsById(this.$route.params.id)
+          .then(resp => this.reviews = resp.data)
+          .catch(error => alert(error))
+      },
+      getCampPlace(){
+        this.$http.getCampPlace(this.$route.params.id)
+          .then(resp => this.model = resp.data)
+          .catch(error => alert(error))
       }
     },
     computed: {

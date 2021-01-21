@@ -1,11 +1,11 @@
 <template lang="html">
 
-  <section class="terrain-overview">
+  <section class="terrain-details">
     
-    <commonDetails/>
+    <commonDetails :model="model"/>
     <v-card>
-      <h2 @click="Hide">Terrein</h2>
-    <v-container :class='specific'>
+      <h2 @click="specific = !specific" class="text-uppercase">Terrein</h2>
+    <v-container v-if='specific'>
       <v-row key="1">
         <v-col
           key="1"
@@ -73,13 +73,13 @@
         </v-col>
       </v-row>
       <span class="bottomright">
-        <v-btn color="primary" @click="Update">Update</v-btn>
+        <v-btn color="secondary" @click="update">update</v-btn>
         <v-dialog
           v-model="dialog"
         >
           <template v-slot:activator="{ on }">
             <v-btn 
-              color="primary"
+              color="error"
               v-on="on"
               >
               Verwijderen
@@ -94,7 +94,7 @@
           </v-card-title>
   
           <v-card-text>
-            Ben je zeker dat je {{model.name}} wil verwijderen?
+            Ben je zeker dat je <strong> {{model.name}} </strong> wil verwijderen?
           </v-card-text>
   
           <v-divider></v-divider>
@@ -104,7 +104,7 @@
             <v-btn
               color="primary"
               text
-              @click="Remove"
+              @click="remove"
             >
               Ja
             </v-btn>
@@ -114,6 +114,7 @@
       </span>
     </v-container>
     </v-card>
+    <v-alert :type="messageType" v-if="message != ''">{{message}}</v-alert>
   </section>
 
 </template>
@@ -123,40 +124,48 @@
   import commonDetails from '../details/common-details.vue'
 
   export default  {
-
-    
-
-    name: 'terrain-overview',
+    name: 'terrain-details',
     props: [],
     mounted () {
-      // this.$http.GetTerrainDetails(this.$route.params.id)
-      //   //.then(resp => this.model = resp.data)
-      //   .then(resp => this.$store.commit('SetCampPlace', resp.data))
-      //   .catch(error => alert(error))
+      this.getTerrain()
     },
     data () {
       return {
-        model: this.$store.state.selectedCampPlace,
-        specific: '',
-        dialog:false
+        model: {
+          place: {},
+          person: {}
+        },
+        specific: true,
+        dialog: false,
+        message: '',
+        messageType: 'success'
       }
     },
     methods: {
-      Hide(){
-        if (this.specific == ''){
-          this.specific = 'hide'
-        }
-        else{
-          this.specific = ''
-        }
-      },
-      Update(){
-        this.$store.commit('SetNewCampPlace', this.model);
+      update(){
+        this.$store.commit('setNewCampPlace', this.model);
         this.$router.push({name: 'new', params: { type: 'terrain'} });
       },
-      Remove(){
-        this.$http.RemoveTerrain(this.model.id);    
-        this.$router.push({name: 'search'});            
+      remove(){
+        this.$http.removeTerrain(this.model.id)
+          .then(resp => {    
+            this.dialog = false;   
+            this.messageType = "success";
+            this.message = resp.data;
+            setTimeout(() => {
+               this.$router.push({name: 'search'});
+            }, 2000);
+          })
+          .catch(error => {
+            this.dialog = false;
+            this.messageType = "error";
+            this.message = this.$error.getError(error);
+          });               
+      },
+      getTerrain(){
+        this.$http.getTerrainDetails(this.$route.params.id)
+          .then(resp => this.model = resp.data)
+          .catch(error => alert(error))
       }
     },
     computed: {
@@ -176,9 +185,6 @@
   }
   .container{
     padding: 1%;
-  }
-  .hide{
-    display: none;
   }
   .bottomright{
     position:absolute;

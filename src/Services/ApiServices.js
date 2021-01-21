@@ -1,5 +1,6 @@
 import axios from '../../node_modules/axios';
 import settings from '../settings/settings';
+import Qs from '../../node_modules/qs'
 
 // var config = {
 //     headers: {'Acces-Control-Allow-Origin': '*'}
@@ -11,59 +12,69 @@ const ajax = axios.create({
 
 export default{
     //GET
-    GetTerrainsOverview(){
-        return ajax.get(`${settings.baseUrlApi}/terrain/all`)
+    getTerrainsOverview(){
+        return ajax.get('terrain/all')
     },
-    GetTerrainDetails(selectedRowId){
-        return ajax.get(`${settings.baseUrlApi}/terrain`,
+    getTerrainDetails(selectedRowId){
+        return ajax.get('terrain',
         {params: {id: selectedRowId}} )
     },
-    GetBuildingsOverview(){
-        return ajax.get(`${settings.baseUrlApi}/building/all`)
+    getBuildingsOverview(){
+        return ajax.get('building/all')
     },
-    GetBuildingDetails(selectedRowId){
-        return ajax.get(`${settings.baseUrlApi}/building`,
+    getBuildingDetails(selectedRowId){
+        return ajax.get('building',
         {params: {id: selectedRowId}} )
     },
-    GetReviewsById(id){
-        return ajax.get(`${settings.baseUrlApi}/reviews`, 
+    getReviewsById(id){
+        return ajax.get('reviews', 
         {params: {id: id}})
+    },
+    getBuildingSearch(buildingSearch){
+        return ajax.get('building/search', {
+            params: buildingSearch,
+            paramsSerializer: function(params) {
+                return Qs.stringify(params)
+            }
+        })
+    },
+    getTerrainSearch(terrainSearch){
+        return ajax.get('terrain/search', {
+            params: terrainSearch
+        })
+    },
+    getCampPlace(id){
+        return ajax.get('campplace', {
+            params: {
+                id
+            }
+        })
     },
 
     //POST
-    PostNewBuilding(building){
-        return ajax.post(`${settings.baseUrlApi}/building`,
+    postNewBuilding(building){
+        return ajax.post('building',
             building
         )
     },
-    PostNewTerrain(terrain){
-        return ajax.post(`${settings.baseUrlApi}/terrain`,
+    postNewTerrain(terrain){
+        return ajax.post('terrain',
             terrain
         )
     },
-    PostTerrainSearch(terrainSearch){
-        return ajax.post(`${settings.baseUrlApi}/terrain/search`,
-            terrainSearch
-        )
-    },
-    PostBuildingSearch(buildingSearch){
-        return ajax.post(`${settings.baseUrlApi}/building/search`,
-            buildingSearch
-        )
-    },
-    PostNewReview(review){
-        return ajax.post(`${settings.baseUrlApi}/reviews`, 
+    postNewReview(review){
+        return ajax.post('reviews', 
             review
         )
     },
 
     //DELETE
-    RemoveBuilding(id){
-        return ajax.delete(`${settings.baseUrlApi}/building/delete`, 
+    removeBuilding(id){
+        return ajax.delete('building/delete', 
             {params: {id: id}})
     },
-    RemoveTerrain(id){
-        return ajax.delete(`${settings.baseUrlApi}/terrain/delete`, 
+    removeTerrain(id){
+        return ajax.delete('terrain/delete', 
             {params: {id: id}})
     }
 }

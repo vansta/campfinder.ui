@@ -5,12 +5,12 @@
       color="primary"
       dark
     >
-      <div class="d-flex align-center clickable" @click="RouteToSearch" >
+      <div class="d-flex align-center clickable" @click="routeToSearch" >
         <v-img
           alt="Scouting Roeselare Logo"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          :src="logo"
           transition="scale-transition"
           width="40"
         />
@@ -23,7 +23,7 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        @click="RouteToNewCampPlace"
+        @click="routeToNewCampPlace"
         text
       >
         <span class="mr-2">Nieuwe kampplaats</span>
@@ -34,7 +34,7 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    <v-footer padless>
+    <v-footer padless color="secondary">
       <v-col
         class="text-center"
         cols="12"
@@ -47,29 +47,29 @@
 
 <script>
 
-export default {
-  name: 'App',
-
+export default {  
+  name: 'App',  
   components: {
   },
 
   data: () => ({
     //
+    logo: require("./assets/logo.png")
   }),
   methods:{
-    RouteToNewCampPlace(){
+    routeToNewCampPlace(){
       if (this.$route.path != 'new'){
         if (this.$store.state.newCampPlace.id != undefined){
-          this.$store.commit('ClearNewCampPlace');
+          this.$store.commit('clearNewCampPlace');
         }
         this.$router.push({name:"new"})
       }
     },
-    RouteToOverview(type){
+    routeToOverview(type){
       this.$store.commit('setType', type)
       this.$router.push({name: type + 'Overview'})
     },
-    RouteToSearch(){
+    routeToSearch(){
       if (this.$route.path != '/')
         this.$router.push({name: 'search'})
     }
@@ -82,9 +82,6 @@ export default {
   }
   .v-content{
     margin:1%;
-  }
-  .hide{
-    display: none;
   }
   .header{
     font-weight: bold;

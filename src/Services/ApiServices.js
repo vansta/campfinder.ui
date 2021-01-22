@@ -40,7 +40,10 @@ export default{
     },
     getTerrainSearch(terrainSearch){
         return ajax.get('terrain/search', {
-            params: terrainSearch
+            params: terrainSearch,
+            paramsSerializer: function(params) {
+                return Qs.stringify(params)
+            }
         })
     },
     getCampPlace(id){

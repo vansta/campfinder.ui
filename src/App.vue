@@ -36,7 +36,7 @@
     </v-content>
     <v-footer padless color="secondary">
       <v-col
-        class="text-center"
+        class="text-center text--disabled"
         cols="12"
       >
       Scouting Roeselare - Vancraeynest Projects
@@ -54,7 +54,7 @@ export default {
 
   data: () => ({
     //
-    logo: require("./assets/logo.png")
+    logo: require("./assets/wosm.png")
   }),
   methods:{
     routeToNewCampPlace(){
